@@ -1,38 +1,67 @@
-.App {
-  text-align: center;
+.Header {
+   /* background-color: black; */
+   color: white;
+   margin: 0px;
+   /* background: linear-gradient(70deg, firebrick 70%, red); */
+   /* border-radius: 0px 0px 20px 20px; */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Header-title {
+   padding: 10px;
+   margin: 0px;
+   color: maroon;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Bookmark-list {
+   height: 500px;
+   width: 800px;
+   max-width: 1000px;
+   overflow: scroll;
+   border: 2px solid maroon;
+   border-radius: 8px;
+   background-color: maroon;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+ul {
+   padding: 0px;
 }
 
-.App-link {
-  color: #61dafb;
+.Content {
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Bookmark {
+   margin: 10px;
+   padding: 5px;
+   /* border: 2px solid firebrick; */
+   border-radius: 5px;
+   background: linear-gradient(250deg, #cc0000, #dc0000, #ec0000 80%);
+}
+
+.Bookmark-name {
+   margin: 0px;
+   padding: 5px 0px 0px 5px;
+   color: maroon;
+}
+
+.Bookmark-description {
+   margin: 0px;
+   padding: 5px;
+}
+
+.Bookmark-link {
+   margin: 0px;
+   padding: 5px;
+}
+
+.Bookmark-topic {
+    margin: 0px;
+    padding: 5px;
+   color: coral;
+}
+
+.TextField {
+   padding: 3px;
 }
