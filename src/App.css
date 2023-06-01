@@ -1,49 +1,67 @@
+.Site-container {
+   display: flex;
+   flex-direction: column;
+}
+
+.Content {
+   display: flex;
+   flex-direction: row;
+}
+
 .Header {
-   /* background-color: black; */
-   color: white;
+   height: 10vh;
+   color: black;
    margin: 0px;
-   /* background: linear-gradient(70deg, firebrick 70%, red); */
-   /* border-radius: 0px 0px 20px 20px; */
+   background-color: #ededed;
 }
 
 .Header-title {
    padding: 10px;
    margin: 0px;
-   color: maroon;
+}
+
+.Bookmark-tags {
 }
 
 .Bookmark-list {
-   height: 500px;
-   width: 800px;
-   max-width: 1000px;
+   height: 88vh;
    overflow: scroll;
-   border: 2px solid maroon;
-   border-radius: 8px;
-   background-color: maroon;
+   overscroll-behavior: contain;
+   background-color: #fcfcfc;
+}
+
+.Bookmark-list-panel {
+   height: 88vh;
+   border-right: 1px solid #333;
+   border-top: 1px solid #333;
+   flex-basis: 300px;
+}
+
+.Bookmark-detail-panel {
+  flex: 1;
+  border-top: 1px solid #333;
 }
 
 ul {
    padding: 0px;
-}
-
-.Content {
-   display: flex;
-   align-items: center;
-   justify-content: center;
+   margin: 0px;
 }
 
 .Bookmark {
-   margin: 10px;
-   padding: 5px;
-   /* border: 2px solid firebrick; */
-   border-radius: 5px;
-   background: linear-gradient(250deg, #cc0000, #dc0000, #ec0000 80%);
+   display: grid;
+   grid-template-rows: 1fr;
+   grid-template-columns: 4fr 1fr;
+   margin: 0 10px 0 0;
+   border-bottom: 1px solid #bbb;
+   padding: 8px;
+   background: white;
 }
 
 .Bookmark-name {
    margin: 0px;
-   padding: 5px 0px 0px 5px;
-   color: maroon;
+   padding: 0px 0px 3px 5px;
+   font-size: 16pt;
+   color: #444;
 }
 
 .Bookmark-description {
@@ -59,9 +77,37 @@ ul {
 .Bookmark-topic {
     margin: 0px;
     padding: 5px;
-   color: coral;
+   color: gray;
 }
 
 .TextField {
    padding: 3px;
+}
+
+.Add-button {
+   border-radius: 5px;
+   border: 1px solid black;
+   background-color: white;
+   padding: 8px;
+   width: 100px;
+   float: right; 
+}
+
+.Modal {
+   position: fixed;
+   width: 100%;
+   height: 100%;
+   background-color: #333333bb;
+   z-index: -1;
+}
+
+.Modal-content {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 0;
+   background-color: purple;
+   color: white;
 }
