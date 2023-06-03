@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import Bookmark from './Bookmark';
 
-export default function BookmarkList() {
+export default function BookmarkList({onSelect}) {
     const [bookmarks, setBookmarks] = useState([]);
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export default function BookmarkList() {
         <div className="Bookmark-list">
             <ul>{
                 bookmarks.map((bookmark) => {
-                    return <Bookmark key={bookmark.id} bookmark={bookmark}/>
+                    return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={onSelect}/>
                 })
                 }
             </ul>

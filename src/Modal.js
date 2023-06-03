@@ -1,11 +1,10 @@
-export default function Modal({content, onDismiss}) {
+export default function Modal({children, onDismiss}) {
     return (
         <>
-            <div className="Modal" onClick={onDismiss}>
-            </div>
-            <div className="Modal-content">
-                {content}
-            </div>
+            <div className="Modal-backdrop" onClick={onDismiss} />
+            <dialog open className="Modal">
+                {children}
+            </dialog>
         </>
     );
 }

@@ -15,14 +15,14 @@ export default function BookmarkTags({bookmark}) {
         fetchTags()
     }, []);
 
-
+    console.log(bookmark);
 
    return (
         <div className="bookmarkTags">
             <div className="Bookmark-list">
                 <ul>{
                     tags.map((tag) => {
-                        return <Bookmark bookmark={tag}/>
+                        return <Bookmark key={tag.id} bookmark={tag}/>
                     })
                     }
                 </ul>
