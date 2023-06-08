@@ -2,7 +2,6 @@ import './App.css';
 
 import { useState } from 'react';
 import BookmarkList from './BookmarkList';
-import BookmarkTags from './BookmarkTags';
 import SiteHeader from './SiteHeader';
 import AddBookmarkForm from './AddBookmarkForm';
 import Modal from './Modal';

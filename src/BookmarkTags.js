@@ -12,12 +12,13 @@ export default function BookmarkTags({bookmark}) {
             setTags(data);
         }
 
-        fetchTags()
-    }, []);
+        fetchTags();
+    }, [bookmark]);
 
     console.log(bookmark);
+    console.log(tags);
 
-   return (
+    return (
         <div className="bookmarkTags">
             <div className="Bookmark-list">
                 <ul>{
@@ -28,6 +29,5 @@ export default function BookmarkTags({bookmark}) {
                 </ul>
             </div>
         </div>
-   );
+    );
 }
-
