@@ -11,6 +11,7 @@ import BookmarkDetail from './BookmarkDetail';
 export default function App() {
     const [addBookmarkVisible, setAddBookmarkVisible] = useState(false);
     const [selectedBookmark, setSelectedBookmark] = useState(null);
+    const [selectedTopic, setSelectedTopic] = useState(null);
 
     function showAddBookmark() {
         console.log('showAddBookmark')
@@ -50,10 +51,14 @@ export default function App() {
                     />
                 </Modal>
             }
-            <SiteHeader onShowAddBookmark={showAddBookmark}/>
+            <SiteHeader onShowAddBookmark={showAddBookmark} setTopic={setSelectedTopic}/>
             <div className="Content">
                 <div className="Bookmark-list-panel">
-                        <BookmarkList onSelect={selectBookmark}/>
+                    <BookmarkList
+                        onSelect={selectBookmark}
+                        selectedTopic={selectedTopic}
+                        setTopic={setSelectedTopic}
+                    />
                 </div>
                 <div className="Bookmark-detail-panel">
                     { selectedBookmark &&

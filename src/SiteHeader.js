@@ -1,10 +1,10 @@
 import Toolbar from './Toolbar'
 
-export default function Header({onShowAddBookmark}) {
+export default function Header({onShowAddBookmark, setTopic}) {
     return (
        <div className="Header">
            <h1 className="Header-title">Bookmarks</h1>
-           <Toolbar onShowAddBookmark={onShowAddBookmark}/>
+           <Toolbar onShowAddBookmark={onShowAddBookmark} setTopic={setTopic}/>
        </div>
     );
 }

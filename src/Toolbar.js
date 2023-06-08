@@ -1,4 +1,24 @@
-export default function Toolbar({onShowAddBookmark}) {
+import { useState } from 'react';
+import { useEffect } from 'react';
+
+export default function Toolbar({onShowAddBookmark, setTopic}) {
+    const [topics, setTopics] = useState([]);
+
+    useEffect(() => {
+        async function fetchTopics() {
+            const response = await fetch('http://127.0.0.1:5000/topics');
+            const data = await response.json();
+            setTopics(data);
+        }
+
+        fetchTopics();
+    }, []);
+
+    function onSelect(event) {
+        console.log(event);
+        setTopic(event.target.value); 
+    }
+
     return (
         <div className="Toolbar">
             <form>
@@ -8,11 +28,11 @@ export default function Toolbar({onShowAddBookmark}) {
             </form>
             <div>
                 <label htmlFor="type-select">Type:</label>
-                <select name="type">
-                    <option value="">All</option>
-                    <option value="">Language</option>
-                    <option value="">Blog</option>
-                </select>
+                <select onClick={onSelect} name="type">{
+                    topics.map((topic) => {
+                        return <option value={topic.name}>{topic.name}</option>;
+                    })
+                }</select>
             </div>
             <button onClick={onShowAddBookmark}>+ Bookmark</button>
         </div>

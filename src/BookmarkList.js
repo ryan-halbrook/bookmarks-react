@@ -2,24 +2,28 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import Bookmark from './Bookmark';
 
-export default function BookmarkList({onSelect}) {
+export default function BookmarkList({onSelect, selectedTopic, setTopic}) {
     const [bookmarks, setBookmarks] = useState([]);
 
     useEffect(() => {
         async function fetchBookmarks() {
-            const response = await fetch('http://127.0.0.1:5000/bookmarks');
+            let url = 'http://127.0.0.1:5000/bookmarks';
+            if (selectedTopic) {
+                url += '?topic=' + selectedTopic;
+            }
+            const response = await fetch(url);
             const data = await response.json();
             setBookmarks(data);
         }
 
-        fetchBookmarks()
-    }, []);
+        fetchBookmarks();
+    }, [selectedTopic]);
 
     return (
         <div className="Bookmark-list">
             <ul>{
                 bookmarks.map((bookmark) => {
-                    return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={onSelect}/>
+                    return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={onSelect} setTopic={setTopic}/>
                 })
                 }
             </ul>
