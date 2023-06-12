@@ -6,7 +6,7 @@ export default function Toolbar({onShowAddBookmark, setTopic}) {
 
     useEffect(() => {
         async function fetchTopics() {
-            const response = await fetch('http://127.0.0.1:5000/topics');
+            const response = await fetch('http://127.0.0.1:5000/types');
             const data = await response.json();
             setTopics(data);
         }

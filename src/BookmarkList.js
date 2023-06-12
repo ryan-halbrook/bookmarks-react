@@ -9,10 +9,13 @@ export default function BookmarkList({onSelect, selectedTopic, setTopic}) {
         async function fetchBookmarks() {
             let url = 'http://127.0.0.1:5000/bookmarks';
             if (selectedTopic) {
-                url += '?topic=' + selectedTopic;
+                url += '?type=' + selectedTopic;
             }
             const response = await fetch(url);
             const data = await response.json();
+            data.sort((a, b) => {
+                return a.name.localeCompare(b.name);
+            });
             setBookmarks(data);
         }
 

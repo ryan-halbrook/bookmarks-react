@@ -28,7 +28,7 @@ export default function AddBookmarkForm({onAddBookmark, onDismiss}) {
         onAddBookmark({
             'name': name,
             'link': link,
-            'topic': topic,
+            'type': topic,
             'description': description
         });
         onDismiss();
@@ -43,7 +43,7 @@ export default function AddBookmarkForm({onAddBookmark, onDismiss}) {
             <input type="text" name="name" required onChange={onName}/>
             <label htmlFor="link">Link: </label>
             <input type="text" name="link" required  onChange={onLink}/>
-            <label htmlFor="topic">Topic: </label>
+            <label htmlFor="topic">Type: </label>
             <input type="text" name="topic" required onChange={onTopic}/>
             <label htmlFor="description">Description: </label>
             <input type="text" name="description"  onChange={onDescription}/>
