@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
+import css from './Toolbar.module.css';
 
 export default function Toolbar({onShowAddBookmark, setTopic}) {
     const [topics, setTopics] = useState([]);
@@ -20,9 +21,9 @@ export default function Toolbar({onShowAddBookmark, setTopic}) {
     }
 
     return (
-        <div className="Toolbar">
+        <div className={css.toolbar}>
             <form>
-                <div className="TextField">
+                <div className={css.textField}>
                     <input type="text" name="search"/>
                 </div>
             </form>

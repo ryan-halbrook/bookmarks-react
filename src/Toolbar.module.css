@@ -1,0 +1,15 @@
+.textField {
+   padding: 3px;
+}
+
+.toolbar {
+   display: grid;
+   grid-template-columns: 2fr 2fr 1fr;
+   grid-template-rows: 1fr;
+   justify-content: center;
+}
+
+.toolbar > button {
+   margin: 10px;
+   width: 100px;
+}

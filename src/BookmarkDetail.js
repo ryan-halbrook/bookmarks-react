@@ -1,4 +1,5 @@
-import BookmarkTags from './BookmarkTags'
+import BookmarkTags from './BookmarkTags';
+import css from './BookmarkDetail.module.css';
 
 export default function BookmarkDetail({bookmark}) {
 
@@ -15,7 +16,7 @@ export default function BookmarkDetail({bookmark}) {
     }
 
     return (
-        <div className="Bookmark-detail">
+        <div className={css.detail}>
             <h1>{bookmark.name}</h1>
             <h2>{bookmark.description}</h2>
             <BookmarkTags bookmark={bookmark}/>

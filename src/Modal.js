@@ -1,8 +1,10 @@
+import css from './Modal.module.css';
+
 export default function Modal({children, onDismiss}) {
     return (
         <>
-            <div className="Modal-backdrop" onClick={onDismiss} />
-            <dialog open className="Modal">
+            <div className={css.backdrop} onClick={onDismiss} />
+            <dialog open className={css.modal}>
                 {children}
             </dialog>
         </>

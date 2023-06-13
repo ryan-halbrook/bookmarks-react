@@ -1,0 +1,11 @@
+.list {
+   height: 88vh;
+   overflow: scroll;
+   overscroll-behavior: contain;
+   background-color: #fcfcfc;
+}
+
+ul {
+   padding: 0px;
+   margin: 0px;
+}

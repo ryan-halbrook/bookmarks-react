@@ -1,0 +1,23 @@
+.bookmark {
+   display: grid;
+   grid-template-rows: 1fr;
+   grid-template-columns: 4fr 1fr;
+   margin: 0 10px 0 0;
+   border-bottom: 1px solid #bbb;
+   padding: 8px;
+   background: white;
+}
+
+.name {
+   margin: 0px;
+   padding: 0px 0px 3px 5px;
+   font-size: 16pt;
+   color: #444;
+   text-decoration: none;
+}
+
+.topic {
+    margin: 0px;
+    padding: 5px;
+    color: gray;
+}

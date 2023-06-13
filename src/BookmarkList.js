@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Bookmark from './Bookmark';
+import css from './BookmarkList.module.css';
 
 export default function BookmarkList({onSelect, selectedTopic, setTopic}) {
     const [bookmarks, setBookmarks] = useState([]);
@@ -23,7 +24,7 @@ export default function BookmarkList({onSelect, selectedTopic, setTopic}) {
     }, [selectedTopic]);
 
     return (
-        <div className="Bookmark-list">
+        <div className={css.list}>
             <ul>{
                 bookmarks.map((bookmark) => {
                     return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={onSelect} setTopic={setTopic}/>
