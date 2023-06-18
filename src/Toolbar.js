@@ -24,7 +24,9 @@ export default function Toolbar({onShowAddBookmark, setTopic}) {
         <div className={css.toolbar}>
             <div>
                 <label htmlFor="type-select">Type:</label>
-                <select onClick={onSelect} name="type">{
+                <select onClick={onSelect} name="type">
+                    <option value={null} label="All">{null}</option>
+                    {
                     topics.map((topic) => {
                         return <option value={topic.name}>{topic.name}</option>;
                     })
