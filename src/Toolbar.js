@@ -22,11 +22,6 @@ export default function Toolbar({onShowAddBookmark, setTopic}) {
 
     return (
         <div className={css.toolbar}>
-            <form>
-                <div className={css.textField}>
-                    <input type="text" name="search"/>
-                </div>
-            </form>
             <div>
                 <label htmlFor="type-select">Type:</label>
                 <select onClick={onSelect} name="type">{

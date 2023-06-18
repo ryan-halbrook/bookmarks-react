@@ -15,8 +15,8 @@ export default function Bookmark({bookmark, onSelect, setTopic}) {
             <div>
                 <a className={css.name} href={bookmark.link} target="_blank">{bookmark.name}</a>
                 <p className={css.topic} onClick={onTopicClick}>:{bookmark.type.name}</p>
+                {/* <p className="Bookmark-description">{bookmark.description}</p> */}
             </div>
-            {/* <p className="Bookmark-description">{bookmark.description}</p> */}
             {/* <a className="Bookmark-link" href={bookmark.link} target="_blank">Link</a> */}
             <button onClick={showDetail}>Detail</button>
         </div>
