@@ -6,7 +6,7 @@ export default function BookmarkTagsList({bookmarks}) {
         bookmarks.map((bookmark) => {
             return (
                 <div className={css.bookmark}>
-                    <a className={css.name} href={bookmark.link} target="_blank">{bookmark.bookmark.name}</a>
+                    <a className={css.name} href={bookmark.bookmark.link} target="_blank">{bookmark.bookmark.name}</a>
                     {/* <p className="Bookmark-description">{bookmark.bookmark.description}</p> */}
                 </div>
             )

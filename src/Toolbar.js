@@ -23,7 +23,7 @@ export default function Toolbar({onShowAddBookmark, setTopic}) {
     return (
         <div className={css.toolbar}>
             <div>
-                <label htmlFor="type-select">Type:</label>
+                <label htmlFor="type-select">Type: </label>
                 <select onClick={onSelect} name="type">
                     <option value={null} label="All">{null}</option>
                     {
