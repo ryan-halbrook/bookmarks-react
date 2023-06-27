@@ -1,6 +1,7 @@
 import css from './Bookmark.module.css';
+import { useEffect } from 'react';
 
-export default function Bookmark({bookmark, onSelect, setTopic}) {
+export default function Bookmark({bookmark, onSelect, setTopic, showInfo='type'}) {
 
     function showDetail() {
         onSelect(bookmark);
@@ -14,10 +15,13 @@ export default function Bookmark({bookmark, onSelect, setTopic}) {
         <div className={css.bookmark}>
             <div>
                 <a className={css.name} href={bookmark.link} target="_blank">{bookmark.name}</a>
-                <p className={css.topic} onClick={onTopicClick}>:{bookmark.type.name}</p>
-                {/* <p className="Bookmark-description">{bookmark.description}</p> */}
+                { showInfo == 'type' &&
+                    <p className={css.topic} onClick={onTopicClick}>:{bookmark.type.name}</p>
+                }
+                { showInfo == 'description' &&
+                    <p className={css.topic}>{bookmark.description}</p>
+                }
             </div>
-            {/* <a className="Bookmark-link" href={bookmark.link} target="_blank">Link</a> */}
             <button onClick={showDetail}>Detail</button>
         </div>
     );

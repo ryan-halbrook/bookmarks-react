@@ -6,12 +6,14 @@ import SiteHeader from './SiteHeader';
 import AddBookmarkForm from './AddBookmarkForm';
 import Modal from './Modal';
 import BookmarkDetail from './BookmarkDetail';
+import Bookmark from './Bookmark';
 
 
 export default function App() {
     const [addBookmarkVisible, setAddBookmarkVisible] = useState(false);
     const [selectedBookmark, setSelectedBookmark] = useState(null);
     const [selectedTopic, setSelectedTopic] = useState(null);
+    const [selectedCollection, setSelectedCollection] = useState(1);
 
     function showAddBookmark() {
         console.log('showAddBookmark')
@@ -29,7 +31,7 @@ export default function App() {
 
     function onAddBookmark(data) {
         console.log(data)
-        fetch('http://127.0.0.1:5000/bookmarks', {
+        fetch('http://127.0.0.1:5000/collections/' + selectedCollection + '/bookmarks', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -39,6 +41,14 @@ export default function App() {
                // 'Accept': 'application/json'
             }
         });
+    }
+
+    function elementBookmark(bookmark) {
+        if (selectedTopic == null) {
+            return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={selectBookmark} setTopic={setSelectedTopic}/>
+        } else {
+            return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={selectBookmark} setTopic={setSelectedTopic} showInfo='description'/>
+        }
     }
 
     return (
@@ -51,14 +61,10 @@ export default function App() {
                     />
                 </Modal>
             }
-            <SiteHeader onShowAddBookmark={showAddBookmark} setTopic={setSelectedTopic}/>
+            <SiteHeader onShowAddBookmark={showAddBookmark} collection={selectedCollection} setCollection={setSelectedCollection} setTopic={setSelectedTopic}/>
             <div className="Content">
                 <div className="Bookmark-list-panel">
-                    <BookmarkList
-                        onSelect={selectBookmark}
-                        selectedTopic={selectedTopic}
-                        setTopic={setSelectedTopic}
-                    />
+                    <BookmarkList collection={selectedCollection} topic={selectedTopic} elementFunc={elementBookmark}/>
                 </div>
                 <div className="Bookmark-detail-panel">
                     { selectedBookmark &&

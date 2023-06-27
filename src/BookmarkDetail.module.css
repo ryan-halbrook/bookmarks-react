@@ -1,6 +1,10 @@
 .detail {
    height: 80vh;
    margin: 20px;
-   overflow: scroll;
-   overscroll-behavior: contain;
+   /* overflow: scroll; */
+   /* overscroll-behavior: contain; */
+}
+
+.detail h1 {
+   font-size: 24pt;
 }
