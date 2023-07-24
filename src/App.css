@@ -30,6 +30,8 @@
 
 .Bookmark-list-panel {
    height: 88vh;
+   overflow: scroll;
+   overscroll-behavior: contain;
    border-right: 1px solid #333;
    border-top: 1px solid #333;
    flex-basis: 300px;

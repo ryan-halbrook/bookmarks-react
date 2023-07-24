@@ -1,0 +1,15 @@
+.container {
+     width: 400px;
+     height: 600px;
+
+}
+
+.listContainer {
+   height: 50%;
+   overflow: scroll;
+   overscroll-behavior: contain;
+}
+
+.bookmarkName {
+   color: white;
+}

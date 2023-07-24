@@ -1,7 +1,4 @@
 .list {
-   height: 88vh;
-   overflow: scroll;
-   overscroll-behavior: contain;
    background-color: #fcfcfc;
 }
 
