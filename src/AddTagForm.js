@@ -7,13 +7,14 @@ export default function AddTagForm({bookmark}) {
 
     function onClickBookmark(event) {
         console.log(event);
-        // setSelectedBookmark(bookmark);
+        console.log(event.target.id);
+        setSelectedBookmark(bookmark);
     }
 
     function elementBookmark(bookmark) {
         return (
-            <div onClick={onClickBookmark}>
-                <p>{bookmark.name}</p>
+            <div>
+                <p id={bookmark.id} onClick={onClickBookmark}>{bookmark.name}</p>
             </div>
         )
     }
@@ -34,7 +35,6 @@ export default function AddTagForm({bookmark}) {
                 </p>
                 { selectedBookmark &&
                     <p className={css.bookmarkName}>
-                        console.log(selectedBookmark);
                         {selectedBookmark.name}
                     </p>
                 }

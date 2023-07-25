@@ -4,6 +4,12 @@
    margin: 0px;
    background-color: #ededed;
 }
+@media (prefers-color-scheme: dark) {
+  .header {
+    background-color: #222;
+    color: white;
+  }
+}
 
 .title {
    padding: 10px;

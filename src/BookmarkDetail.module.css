@@ -3,8 +3,20 @@
    margin: 20px;
    /* overflow: scroll; */
    /* overscroll-behavior: contain; */
+   color: black;
+}
+@media (prefers-color-scheme:dark) {
+  .detail {
+    color: #eee;
+  }
 }
 
 .detail h1 {
    font-size: 24pt;
+}
+
+@media (prefers-color-scheme: dark) {
+  .detail h1 {
+    color: #efefef
+  }
 }

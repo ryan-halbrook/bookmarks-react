@@ -7,6 +7,12 @@
    padding: 8px;
    background: white;
 }
+@media (prefers-color-scheme: dark) {
+  .bookmark {
+    background: black;
+    border-bottom: 1px solid #333;
+  }
+}
 
 .name {
    margin: 0px;
@@ -14,6 +20,11 @@
    font-size: 16pt;
    color: #444;
    text-decoration: none;
+}
+@media (prefers-color-scheme: dark) {
+  .name {
+    color: #eee;
+  }
 }
 
 .topic {

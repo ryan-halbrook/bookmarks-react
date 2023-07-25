@@ -2,6 +2,12 @@
    background-color: #fcfcfc;
 }
 
+@media (prefers-color-scheme: dark) {
+ .list {
+   background-color: black;
+ }
+}
+
 ul {
    padding: 0px;
    margin: 0px;
