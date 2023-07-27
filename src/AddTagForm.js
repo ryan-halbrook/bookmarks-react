@@ -2,7 +2,7 @@ import css from './AddTagForm.module.css';
 import { useState } from 'react';
 import BookmarkList from './BookmarkList';
 
-export default function AddTagForm({bookmark}) {
+export default function AddTagForm({bookmark, onTagSaved}) {
     const [selectedBookmark, setSelectedBookmark] = useState(null);
 
     function onClickBookmark(event) {
@@ -13,15 +13,17 @@ export default function AddTagForm({bookmark}) {
 
     function elementBookmark(bookmark) {
         return (
-            <div>
-                <p id={bookmark.id} onClick={onClickBookmark}>{bookmark.name}</p>
+            <div key={bookmark.id}>
+                <p onClick={() => setSelectedBookmark(bookmark)}>{bookmark.name}</p>
             </div>
         )
     }
 
     function onSubmit(event) {
+        event.preventDefault();
         console.log('Selected bookmark');
         console.log(selectedBookmark.name);
+        onTagSaved(selectedBookmark);
     }
 
     return (

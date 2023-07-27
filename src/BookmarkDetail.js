@@ -5,7 +5,7 @@ import ConfirmDialog from './ConfirmDialog';
 import css from './BookmarkDetail.module.css';
 import { useState } from 'react';
 
-export default function BookmarkDetail({bookmark}) {
+export default function BookmarkDetail({bookmark, onSelectBookmark}) {
     const [addTagShowing, setAddTagShowing] = useState(false);
     const [deleteShowing, setDeleteShowing] = useState(false);
 
@@ -38,11 +38,33 @@ export default function BookmarkDetail({bookmark}) {
         setAddTagShowing(false);
     }
 
+    function onTagSaved(tag) {
+        setAddTagShowing(false);
+        console.log('1234');
+        console.log(tag);
+
+        const data = {
+            'tag_bookmark_id': tag.id
+        };
+
+        fetch('http://127.0.0.1:5000/bookmarks/' + bookmark.id  + '/tags', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Request-Headers': 'content-type',
+                'Access-Control-Request-Method': 'POST',
+               // 'Accept': 'application/json'
+            }
+        });
+
+    }
+
     return (
         <div className={css.detail}>
             { addTagShowing &&
                 <Modal onDismiss={onDismissAddTag}>
-                    <AddTagForm bookmark={bookmark}/>
+                    <AddTagForm bookmark={bookmark} onTagSaved={onTagSaved}/>
                 </Modal>
             }
             { deleteShowing &&
@@ -55,7 +77,7 @@ export default function BookmarkDetail({bookmark}) {
             <h1>{bookmark.name}</h1>
             <p>:{bookmark.type.name}</p>
             <p>{bookmark.description}</p>
-            <BookmarkTags bookmark={bookmark} onAddTag={addTagHandler}/>
+            <BookmarkTags bookmark={bookmark} onAddTag={addTagHandler} onSelectBookmark={onSelectBookmark}/>
             <button onClick={showDeleteModal}>Delete</button>
         </div>
     );

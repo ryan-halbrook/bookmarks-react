@@ -64,11 +64,11 @@ export default function App() {
             <SiteHeader onShowAddBookmark={showAddBookmark} collection={selectedCollection} setCollection={setSelectedCollection} setTopic={setSelectedTopic}/>
             <div className="Content">
                 <div className="Bookmark-list-panel">
-                    <BookmarkList collection={selectedCollection} topic={selectedTopic} elementFunc={elementBookmark}/>
+                  <BookmarkList collection={selectedCollection} topic={selectedTopic} elementFunc={elementBookmark}/>
                 </div>
                 <div className="Bookmark-detail-panel">
                     { selectedBookmark &&
-                        <BookmarkDetail bookmark={selectedBookmark}/>
+                        <BookmarkDetail bookmark={selectedBookmark} onSelectBookmark={selectBookmark}/>
                     }
                 </div>
             </div>

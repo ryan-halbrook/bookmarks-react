@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import BookmarkTagsList from './BookmarkTagsList';
 import css from './BookmarkTags.module.css';
 
-export default function BookmarkTags({bookmark, onAddTag}) {
+export default function BookmarkTags({bookmark, onAddTag, onSelectBookmark}) {
    const [tags, setTags] = useState({});
    const [types, setTypes] = useState([]);
   
@@ -40,7 +40,7 @@ export default function BookmarkTags({bookmark, onAddTag}) {
                     types.map((type) => {
                         return <>
                                   <p className={css.typeName}>{type}</p>
-                                  <BookmarkTagsList bookmarks={tags[type]}/>
+                                  <BookmarkTagsList bookmarks={tags[type]} onSelectBookmark={onSelectBookmark}/>
                                </>
                     })
                     }

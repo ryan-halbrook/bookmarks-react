@@ -9,16 +9,20 @@
   }
 }
 
-
 .Site-container {
    display: flex;
    flex-direction: column;
-   height: 1vh;
 }
 
 .Content {
    display: flex;
    flex-direction: row;
+}
+
+.Site-container, .Content {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 .Header {
@@ -33,31 +37,18 @@
    margin: 0px;
 }
 
-.Bookmark-list {
-   height: 88vh;
-   overflow: scroll;
-   overscroll-behavior: contain;
-   background-color: #fcfcfc;
-}
-
 .Bookmark-list-panel {
-   height: 88vh;
-   overflow: scroll;
-   overscroll-behavior: contain;
+    /* height: 100px; */
    border-right: 1px solid #333;
    border-top: 1px solid #333;
    flex-basis: 300px;
+   overflow: scroll;
 }
 
 .Bookmark-detail-panel {
-   height: 88vh;
    flex: 1;
    border-top: 1px solid #333;
-}
-
-ul {
-   padding: 0px;
-   margin: 0px;
+   overflow: scroll;
 }
 
 .Bookmark {
