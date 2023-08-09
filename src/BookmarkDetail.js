@@ -74,11 +74,11 @@ export default function BookmarkDetail({bookmark, onSelectBookmark}) {
                     </ConfirmDialog>
                 </Modal>
             }
-            <h1>{bookmark.name}</h1>
-            <p>:{bookmark.type.name}</p>
+            <h1><a className={css.link} href={bookmark.link} target="_blank">{bookmark.name}</a></h1>
+            <p className={css.typeLabel}>:{bookmark.type.name}</p>
             <p>{bookmark.description}</p>
             <BookmarkTags bookmark={bookmark} onAddTag={addTagHandler} onSelectBookmark={onSelectBookmark}/>
-            <button onClick={showDeleteModal}>Delete</button>
+            <button className={css.deleteButton} onClick={showDeleteModal}>Delete</button>
         </div>
     );
 }

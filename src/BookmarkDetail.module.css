@@ -13,10 +13,32 @@
 
 .detail h1 {
    font-size: 24pt;
+   margin: 0;
+   padding: 0;
 }
-
 @media (prefers-color-scheme: dark) {
   .detail h1 {
-    color: #efefef
+    color: #efefef;
   }
+}
+
+.typeLabel {
+   font-size: 14pt;
+   margin: 5px 0 36px 0;
+   padding: 0;
+   color: #777;
+}
+
+.link {
+   color: #222;
+   text-decoration: none;
+}
+@media (prefers-color-scheme: dark) {
+  .link {
+    color: #eee;
+  }
+}
+
+.deleteButton {
+   margin-top: 24px;
 }

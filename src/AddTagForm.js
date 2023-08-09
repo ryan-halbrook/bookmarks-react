@@ -13,7 +13,8 @@ export default function AddTagForm({bookmark, onTagSaved}) {
 
     function elementBookmark(bookmark) {
         return (
-            <div key={bookmark.id}>
+            <div class={css.tagBookmark} key={bookmark.id}>
+                <input type="checkbox" />
                 <p onClick={() => setSelectedBookmark(bookmark)}>{bookmark.name}</p>
             </div>
         )
@@ -28,6 +29,8 @@ export default function AddTagForm({bookmark, onTagSaved}) {
 
     return (
         <div className={css.container}>
+            <h1>Edit Tags for '{bookmark.name}'</h1>
+            <input className={css.search} type="text" />
             <div className={css.listContainer}>
                 <BookmarkList collection={1} topic={null} elementFunc={elementBookmark}/>
             </div>
@@ -40,6 +43,7 @@ export default function AddTagForm({bookmark, onTagSaved}) {
                         {selectedBookmark.name}
                     </p>
                 }
+                <button type="button">Cancel</button>
                 <button id="save">Save</button>
             </form>
         </div>

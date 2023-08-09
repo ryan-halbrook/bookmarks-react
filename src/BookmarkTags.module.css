@@ -1,7 +1,8 @@
 .typeName {
-    font-size: 20pt;
+    font-size: 14pt;
 }
 
-.tags h1 {
-    font-size: 18pt;
+.tags h2 {
+    font-size: 16pt;
+    padding-top: 16px;
 }

@@ -33,7 +33,7 @@ export default function BookmarkTags({bookmark, onAddTag, onSelectBookmark}) {
 
     return (
         <div className={css.tags}>
-            <h1>Tags</h1>
+            <h2>Tags</h2>
             <button onClick={onAddTag}>Add Tag</button>
             <div>
                 <ul>{
