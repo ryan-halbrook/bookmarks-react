@@ -2,11 +2,11 @@ import './App.css';
 
 import { useState } from 'react';
 import BookmarkList from './BookmarkList';
-import SiteHeader from './SiteHeader';
+import SiteHeader from './header/SiteHeader';
 import AddBookmarkForm from './AddBookmarkForm';
 import AddCollectionForm from './AddCollectionForm';
 import Modal from './Modal';
-import BookmarkDetail from './BookmarkDetail';
+import BookmarkDetail from './detail/BookmarkDetail';
 import Bookmark from './Bookmark';
 import { fetchCollections, addBookmark, addCollection } from './client';
 

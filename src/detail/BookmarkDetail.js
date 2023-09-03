@@ -1,10 +1,10 @@
 import BookmarkTags from './BookmarkTags';
-import Modal from './Modal';
+import Modal from '../Modal';
 import AddTagForm from './AddTagForm';
-import ConfirmDialog from './ConfirmDialog';
+import ConfirmDialog from '../ConfirmDialog';
 import css from './BookmarkDetail.module.css';
 import { useState } from 'react';
-import { deleteBookmark, addTag } from './client'
+import { deleteBookmark, addTag } from '../client'
 
 export default function BookmarkDetail({bookmark, onSelectBookmark}) {
     const [addTagShowing, setAddTagShowing] = useState(false);

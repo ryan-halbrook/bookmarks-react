@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import css from './Toolbar.module.css';
-import { fetchTypes, fetchCollections } from './client';
+import { fetchTypes, fetchCollections } from '../client';
 
 export default function Toolbar({onShowAddBookmark, onShowAddCollection, collection, setCollection, setTopic}) {
     const [topics, setTopics] = useState([]);

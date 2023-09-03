@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import BookmarkTagsList from './BookmarkTagsList';
 import css from './BookmarkTags.module.css';
-import { fetchTags } from './client'
+import { fetchTags } from '../client'
 
 export default function BookmarkTags({bookmark, onAddTag, onSelectBookmark}) {
    const [tags, setTags] = useState({});

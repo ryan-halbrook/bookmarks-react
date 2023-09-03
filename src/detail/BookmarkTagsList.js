@@ -1,4 +1,4 @@
-import Bookmark from './Bookmark';
+import Bookmark from '../Bookmark';
 import css from './BookmarkTagsList.module.css'
 
 export default function BookmarkTagsList({bookmarks, onSelectBookmark}) {

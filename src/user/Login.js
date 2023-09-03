@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import css from './Modal.module.css';
-import { login } from './client';
+import css from '../Modal.module.css';
+import { login } from '../client';
 
 
 export default function Signup() {

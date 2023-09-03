@@ -1,7 +1,7 @@
 import css from './AddTagForm.module.css';
 import { useState } from 'react';
-import BookmarkList from './BookmarkList';
-
+import BookmarkList from '../BookmarkList';
+    
 export default function AddTagForm({bookmark, onTagSaved}) {
     const [selectedBookmark, setSelectedBookmark] = useState(null);
 

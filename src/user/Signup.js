@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import css from './Signup.module.css';
-import { signup, login } from './client';
+import { signup, login } from '../client';
 
 export default function Signup() {
     const [email, setEmail] = useState('');

@@ -7,8 +7,8 @@ import {
   createBrowserRouter,
   RouterProvider
 } from 'react-router-dom'
-import Signup from './Signup';
-import Login from './Login'
+import Signup from './user/Signup';
+import Login from './user/Login'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
