@@ -1,27 +1,29 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import css from './Toolbar.module.css';
+import { fetchTypes, fetchCollections } from './client';
 
-export default function Toolbar({onShowAddBookmark, collection, setCollection, setTopic}) {
+export default function Toolbar({onShowAddBookmark, onShowAddCollection, collection, setCollection, setTopic}) {
     const [topics, setTopics] = useState([]);
     const [collections, setCollections] = useState([]);
 
     useEffect(() => {
         async function fetchTopics() {
-            const response = await fetch('http://127.0.0.1:5000/collections/' + collection + '/types');
+            const response = await fetchTypes(collection);
             const data = await response.json();
             setTopics(data);
         }
+        if (collection) {
+            fetchTopics();
+        }
 
-        fetchTopics();
-
-        async function fetchCollections() {
-            const response = await fetch('http://127.0.0.1:5000/collections');
+        async function fetchData() {
+            const response = await fetchCollections();
             const data = await response.json();
             setCollections(data);
         }
 
-        fetchCollections();
+        fetchData();
     }, [collection]);
 
     function onSelect(event) {
@@ -33,6 +35,12 @@ export default function Toolbar({onShowAddBookmark, collection, setCollection, s
         if (!Number.isNaN(collectionAsInt)) {
             setCollection(collectionAsInt);
         }
+    }
+
+    function logout(event) {
+        localStorage.removeItem('email');
+        localStorage.removeItem('token');
+        window.location.replace('/login');
     }
 
     return (
@@ -55,8 +63,14 @@ export default function Toolbar({onShowAddBookmark, collection, setCollection, s
                         return <option key={collection.id} value={collection.id} label={collection.name}>{collection.id}</option>;
                     })
                 }</select>
+                <button onClick={onShowAddBookmark}>+ Bookmark</button>
+                <button onClick={onShowAddCollection}>+ Collection</button>
             </div>
-            <button onClick={onShowAddBookmark}>+ Bookmark</button>
+            <div className={css.email}>
+                {localStorage.getItem('email')}
+                
+                <button onClick={logout}>Logout</button>
+            </div>
         </div>
     );
 }

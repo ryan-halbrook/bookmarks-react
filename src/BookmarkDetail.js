@@ -4,22 +4,11 @@ import AddTagForm from './AddTagForm';
 import ConfirmDialog from './ConfirmDialog';
 import css from './BookmarkDetail.module.css';
 import { useState } from 'react';
+import { deleteBookmark, addTag } from './client'
 
 export default function BookmarkDetail({bookmark, onSelectBookmark}) {
     const [addTagShowing, setAddTagShowing] = useState(false);
     const [deleteShowing, setDeleteShowing] = useState(false);
-
-    function deleteBookmark() {
-        fetch('http://127.0.0.1:5000/bookmarks/' + bookmark.id, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Request-Headers': 'content-type',
-                'Access-Control-Request-Method': 'POST',
-               // 'Accept': 'application/json'
-            }
-        });
-    }
 
     function showDeleteModal() {
         setDeleteShowing(true);
@@ -40,24 +29,7 @@ export default function BookmarkDetail({bookmark, onSelectBookmark}) {
 
     function onTagSaved(tag) {
         setAddTagShowing(false);
-        console.log('1234');
-        console.log(tag);
-
-        const data = {
-            'tag_bookmark_id': tag.id
-        };
-
-        fetch('http://127.0.0.1:5000/bookmarks/' + bookmark.id  + '/tags', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Request-Headers': 'content-type',
-                'Access-Control-Request-Method': 'POST',
-               // 'Accept': 'application/json'
-            }
-        });
-
+        addTag(bookmark.id, tag.id);
     }
 
     return (
@@ -69,7 +41,7 @@ export default function BookmarkDetail({bookmark, onSelectBookmark}) {
             }
             { deleteShowing &&
                 <Modal onDismiss={onDismissDelete}>
-                    <ConfirmDialog onConfirm={deleteBookmark} onCancel={onDismissDelete}>
+                    <ConfirmDialog onConfirm={() => {deleteBookmark(bookmark.id);}} onCancel={onDismissDelete}>
                         Are you sure you want to delete the bookmark?
                     </ConfirmDialog>
                 </Modal>

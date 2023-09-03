@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import BookmarkTagsList from './BookmarkTagsList';
 import css from './BookmarkTags.module.css';
+import { fetchTags } from './client'
 
 export default function BookmarkTags({bookmark, onAddTag, onSelectBookmark}) {
    const [tags, setTags] = useState({});
@@ -22,13 +23,13 @@ export default function BookmarkTags({bookmark, onAddTag, onSelectBookmark}) {
    }
 
    useEffect(() => {
-        async function fetchTags() {
-            const response = await fetch('http://127.0.0.1:5000/bookmarks/' + bookmark.id + '/tags');
+        async function fetchData() {
+            const response = await fetchTags(bookmark.id);
             const data = await response.json();
             processTags(data);
         }
 
-        fetchTags();
+        fetchData();
     }, [bookmark]);
 
     return (

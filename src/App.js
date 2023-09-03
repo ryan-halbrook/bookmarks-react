@@ -4,24 +4,55 @@ import { useState } from 'react';
 import BookmarkList from './BookmarkList';
 import SiteHeader from './SiteHeader';
 import AddBookmarkForm from './AddBookmarkForm';
+import AddCollectionForm from './AddCollectionForm';
 import Modal from './Modal';
 import BookmarkDetail from './BookmarkDetail';
 import Bookmark from './Bookmark';
+import { fetchCollections, addBookmark, addCollection } from './client';
 
 
 export default function App() {
     const [addBookmarkVisible, setAddBookmarkVisible] = useState(false);
+    const [addCollectionVisible, setAddCollectionVisible] = useState(false);
     const [selectedBookmark, setSelectedBookmark] = useState(null);
-    const [selectedTopic, setSelectedTopic] = useState(null);
-    const [selectedCollection, setSelectedCollection] = useState(1);
+    const [selectedType, setSelectedType] = useState(null);
+    const [selectedCollection, setSelectedCollection] = useState(null);
+
+    if (!localStorage.getItem('token') || !localStorage.getItem('email')) {
+        window.location.replace('/login');
+    }
+    
+    async function fetchData() {
+        const response = await fetchCollections();
+        const data = await response.json();
+        console.log(data)
+        if (data.length > 0){
+            console.log(data.length)
+            if (selectedCollection == null) {
+                setSelectedCollection(data[0].id);
+            }
+        }
+    }
+
+    if (selectedCollection == null) {
+        fetchData();
+    }
 
     function showAddBookmark() {
         console.log('showAddBookmark')
         setAddBookmarkVisible(true);
     }
 
+    function showAddCollection() {
+        setAddCollectionVisible(true);
+    }
+
     function dismissAddBookmark() {
         setAddBookmarkVisible(false);
+    }
+
+    function dismissAddCollection() {
+        setAddCollectionVisible(false);
     }
 
     function selectBookmark(bookmark) {
@@ -30,24 +61,18 @@ export default function App() {
     }
 
     function onAddBookmark(data) {
-        console.log(data)
-        fetch('http://127.0.0.1:5000/collections/' + selectedCollection + '/bookmarks', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Request-Headers': 'content-type',
-                'Access-Control-Request-Method': 'POST',
-               // 'Accept': 'application/json'
-            }
-        });
+        addBookmark(selectedCollection, data);
+    }
+
+    function onAddCollection(data) {
+        addCollection(data);
     }
 
     function elementBookmark(bookmark) {
-        if (selectedTopic == null) {
-            return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={selectBookmark} setTopic={setSelectedTopic}/>
+        if (selectedType == null) {
+            return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={selectBookmark} setTopic={setSelectedType}/>
         } else {
-            return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={selectBookmark} setTopic={setSelectedTopic} showInfo='description'/>
+            return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={selectBookmark} setTopic={setSelectedType} showInfo='description'/>
         }
     }
 
@@ -61,10 +86,20 @@ export default function App() {
                     />
                 </Modal>
             }
-            <SiteHeader onShowAddBookmark={showAddBookmark} collection={selectedCollection} setCollection={setSelectedCollection} setTopic={setSelectedTopic}/>
+            { addCollectionVisible &&
+                <Modal onDismiss={dismissAddCollection}>
+                    <AddCollectionForm 
+                        onAddCollection={onAddCollection} 
+                        onDismiss={dismissAddCollection}
+                    />
+                </Modal>
+            }
+            <SiteHeader onShowAddBookmark={showAddBookmark} onShowAddCollection={showAddCollection} collection={selectedCollection} setCollection={setSelectedCollection} setTopic={setSelectedType}/>
             <div className="Content">
                 <div className="Bookmark-list-panel">
-                  <BookmarkList collection={selectedCollection} topic={selectedTopic} elementFunc={elementBookmark}/>
+                  { selectedCollection &&
+                    <BookmarkList collection={selectedCollection} topic={selectedType} elementFunc={elementBookmark}/>
+                  }
                 </div>
                 <div className="Bookmark-detail-panel">
                     { selectedBookmark &&
