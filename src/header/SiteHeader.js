@@ -1,11 +1,11 @@
 import Toolbar from './Toolbar';
 import css from './SiteHeader.module.css';
 
-export default function Header({onShowAddBookmark, onShowAddCollection, collection, setCollection, setTopic}) {
+export default function Header({onShowAddBookmark, onShowAddCollection, collection, setCollection, setTopic, setSearch}) {
     return (
        <div className={css.header}>
-           <h1 className={css.title}>Bookmarks</h1>
-           <Toolbar onShowAddBookmark={onShowAddBookmark} onShowAddCollection={onShowAddCollection} collection={collection} setCollection={setCollection} setTopic={setTopic}/>
+
+           <Toolbar onShowAddBookmark={onShowAddBookmark} onShowAddCollection={onShowAddCollection} collection={collection} setCollection={setCollection} setTopic={setTopic} setSearch={setSearch}/>
        </div>
     );
 }

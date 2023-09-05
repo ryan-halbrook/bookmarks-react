@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import css from './Signup.module.css';
+import './Signup.module.css';
 import { signup, login } from '../client';
 
 export default function Signup() {
@@ -18,9 +18,9 @@ export default function Signup() {
         event.preventDefault();
         
         signup(email, password).then((response) => {
-            if (response.status == 200) {
+            if (response.status === 200) {
                 login(email, password).then((response) => {
-                    if (response.status == 200) {
+                    if (response.status === 200) {
                         response.json().then((json) => {
                             localStorage.setItem('email', json.email);
                             localStorage.setItem('token', json.token);
@@ -35,7 +35,7 @@ export default function Signup() {
     return (
         <div>
             <h1>Signup</h1>
-            <form onSubmit={onSubmit}>
+            <form id="signup" onSubmit={onSubmit}>
 
                 <label htmlFor="email">Email: </label>
                 <input type="text" name="email" required onChange={onEmail} />

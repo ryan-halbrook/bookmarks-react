@@ -45,6 +45,12 @@
    overflow: scroll;
 }
 
+.Bookmark-list-info {
+   background-color: #464646;
+   color: #e3eefd;
+   padding: 3px 0px 3px 10px;
+}
+
 .Bookmark-detail-panel {
    flex: 1;
    border-top: 1px solid #333;

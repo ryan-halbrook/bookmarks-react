@@ -5,12 +5,6 @@ import BookmarkList from '../BookmarkList';
 export default function AddTagForm({bookmark, onTagSaved}) {
     const [selectedBookmark, setSelectedBookmark] = useState(null);
 
-    function onClickBookmark(event) {
-        console.log(event);
-        console.log(event.target.id);
-        setSelectedBookmark(bookmark);
-    }
-
     function elementBookmark(bookmark) {
         return (
             <div class={css.tagBookmark} key={bookmark.id}>
@@ -22,8 +16,6 @@ export default function AddTagForm({bookmark, onTagSaved}) {
 
     function onSubmit(event) {
         event.preventDefault();
-        console.log('Selected bookmark');
-        console.log(selectedBookmark.name);
         onTagSaved(selectedBookmark);
     }
 

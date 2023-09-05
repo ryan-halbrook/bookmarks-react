@@ -10,7 +10,7 @@
    background-color: #ffffff;
    z-index: 1;
    border: none;
-   border-radius: 12px;
+   border-radius: 8px;
 }
 @media (prefers-color-scheme: dark) {
    .modal {

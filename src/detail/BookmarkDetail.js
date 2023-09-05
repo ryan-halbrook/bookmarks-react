@@ -46,7 +46,7 @@ export default function BookmarkDetail({bookmark, onSelectBookmark}) {
                     </ConfirmDialog>
                 </Modal>
             }
-            <h1><a className={css.link} href={bookmark.link} target="_blank">{bookmark.name}</a></h1>
+            <h1><a className={css.link} href={bookmark.link} target="_blank" rel="noreferrer">{bookmark.name}</a></h1>
             <p className={css.typeLabel}>:{bookmark.type.name}</p>
             <p>{bookmark.description}</p>
             <BookmarkTags bookmark={bookmark} onAddTag={addTagHandler} onSelectBookmark={onSelectBookmark}/>

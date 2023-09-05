@@ -32,6 +32,11 @@ export async function fetchBookmarks(collection_id, type_name) {
     return fetch(endpoint_url(endpoint), get_header);
 }
 
+export async function searchBookmarks(collection_id, search) {
+    let endpoint = '/collections/' + collection_id + '/bookmarks?query=' + search + '&match=name';
+    return fetch(endpoint_url(endpoint), get_header);
+}
+
 export async function fetchTags(bookmark_id) {
     return fetch(endpoint_url('/bookmarks/' + bookmark_id + '/tags'), get_header);
 }

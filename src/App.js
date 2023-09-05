@@ -1,7 +1,8 @@
 import './App.css';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BookmarkList from './BookmarkList';
+import BookmarkSearchList from './BookmarkSearchList';
 import SiteHeader from './header/SiteHeader';
 import AddBookmarkForm from './AddBookmarkForm';
 import AddCollectionForm from './AddCollectionForm';
@@ -17,17 +18,20 @@ export default function App() {
     const [selectedBookmark, setSelectedBookmark] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
     const [selectedCollection, setSelectedCollection] = useState(null);
+    const [search, setSearch] = useState(null);
+
+    useEffect(() => {
+        setSelectedType(null);
+    }, [search])
 
     if (!localStorage.getItem('token') || !localStorage.getItem('email')) {
         window.location.replace('/login');
     }
-    
+
     async function fetchData() {
         const response = await fetchCollections();
         const data = await response.json();
-        console.log(data)
         if (data.length > 0){
-            console.log(data.length)
             if (selectedCollection == null) {
                 setSelectedCollection(data[0].id);
             }
@@ -39,7 +43,6 @@ export default function App() {
     }
 
     function showAddBookmark() {
-        console.log('showAddBookmark')
         setAddBookmarkVisible(true);
     }
 
@@ -56,7 +59,6 @@ export default function App() {
     }
 
     function selectBookmark(bookmark) {
-        console.log(bookmark);
         setSelectedBookmark(bookmark);
     }
 
@@ -66,6 +68,10 @@ export default function App() {
 
     function onAddCollection(data) {
         addCollection(data);
+    }
+
+    function setSearchDebug(data) {
+        setSearch(data);
     }
 
     function elementBookmark(bookmark) {
@@ -94,12 +100,28 @@ export default function App() {
                     />
                 </Modal>
             }
-            <SiteHeader onShowAddBookmark={showAddBookmark} onShowAddCollection={showAddCollection} collection={selectedCollection} setCollection={setSelectedCollection} setTopic={setSelectedType}/>
+            <SiteHeader
+                onShowAddBookmark={showAddBookmark}
+                onShowAddCollection={showAddCollection}
+                collection={selectedCollection}
+                setCollection={setSelectedCollection}
+                setTopic={setSelectedType}
+                setSearch={setSearchDebug}
+            />
+
             <div className="Content">
                 <div className="Bookmark-list-panel">
-                  { selectedCollection &&
-                    <BookmarkList collection={selectedCollection} topic={selectedType} elementFunc={elementBookmark}/>
-                  }
+                    { search &&
+                        <div className="Bookmark-list-info">
+                            Name Contains '{search}'
+                        </div>
+                    }
+                    { search &&
+                        <BookmarkSearchList collection={selectedCollection} search={search} elementFunc={elementBookmark}/>
+                    }
+                    { (selectedCollection && !search) &&
+                        <BookmarkList collection={selectedCollection} topic={selectedType} elementFunc={elementBookmark}/>
+                    }
                 </div>
                 <div className="Bookmark-detail-panel">
                     { selectedBookmark &&

@@ -19,7 +19,7 @@ export default function Signup() {
         event.preventDefault();
         login(email, password).then((response) => {
             console.log(response);
-            if (response.status == 200) {
+            if (response.status === 200) {
                 response.json().then((json) => {
                     localStorage.setItem('email', json.email);
                     localStorage.setItem('token', json.token);
