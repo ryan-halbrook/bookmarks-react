@@ -6,7 +6,7 @@ import css from './BookmarkDetail.module.css';
 import { useState } from 'react';
 import { deleteBookmark, addTag } from '../client'
 
-export default function BookmarkDetail({bookmark, onSelectBookmark}) {
+export default function BookmarkDetail({collectionId, bookmark, onSelectBookmark}) {
     const [addTagShowing, setAddTagShowing] = useState(false);
     const [deleteShowing, setDeleteShowing] = useState(false);
 
@@ -36,12 +36,12 @@ export default function BookmarkDetail({bookmark, onSelectBookmark}) {
         <div className={css.detail}>
             { addTagShowing &&
                 <Modal onDismiss={onDismissAddTag}>
-                    <AddTagForm bookmark={bookmark} onTagSaved={onTagSaved}/>
+                    <AddTagForm collectionId={collectionId} bookmark={bookmark} onTagSaved={onTagSaved} onDismiss={onDismissAddTag}/>
                 </Modal>
             }
             { deleteShowing &&
                 <Modal onDismiss={onDismissDelete}>
-                    <ConfirmDialog onConfirm={() => {deleteBookmark(bookmark.id);}} onCancel={onDismissDelete}>
+                    <ConfirmDialog onConfirm={() => {deleteBookmark(collectionId, bookmark.id);}} onCancel={onDismissDelete}>
                         Are you sure you want to delete the bookmark?
                     </ConfirmDialog>
                 </Modal>

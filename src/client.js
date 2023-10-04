@@ -110,7 +110,7 @@ export async function signup(email, password) {
                 'Access-Control-Request-Headers': 'content-type',
                 'Access-Control-Request-Method': 'POST',
             }
-        })
+        });
 
 
 }

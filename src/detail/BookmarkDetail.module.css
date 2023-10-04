@@ -30,12 +30,13 @@
 }
 
 .link {
-   color: #222;
+   /* color: #222; */
+   color: cornflowerblue;
    text-decoration: none;
 }
 @media (prefers-color-scheme: dark) {
   .link {
-    color: #eee;
+    color: cornflowerblue;
   }
 }
 

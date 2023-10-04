@@ -1,17 +1,19 @@
 import css from './AddTagForm.module.css';
 import { useState } from 'react';
 import BookmarkList from '../BookmarkList';
-    
-export default function AddTagForm({bookmark, onTagSaved}) {
+import BookmarkSearchList from '../BookmarkSearchList';
+import Bookmark from '../Bookmark';
+
+export default function AddTagForm({collectionId, bookmark, onTagSaved, onDismiss}) {
     const [selectedBookmark, setSelectedBookmark] = useState(null);
+    const [searchEntered, setSearchEntered] = useState(null);
 
     function elementBookmark(bookmark) {
         return (
             <div class={css.tagBookmark} key={bookmark.id}>
-                <input type="checkbox" />
                 <p onClick={() => setSelectedBookmark(bookmark)}>{bookmark.name}</p>
             </div>
-        )
+        );
     }
 
     function onSubmit(event) {
@@ -19,25 +21,30 @@ export default function AddTagForm({bookmark, onTagSaved}) {
         onTagSaved(selectedBookmark);
     }
 
+    function onSearchEntered(event) {
+        setSearchEntered(event.target.value);
+    }
+
     return (
         <div className={css.container}>
-            <h1>Edit Tags for '{bookmark.name}'</h1>
-            <input className={css.search} type="text" />
+            <h1 className={css.header}>Tag '{bookmark.name}'</h1>
+            <input className={css.search} type="text" onChange={onSearchEntered}/>
             <div className={css.listContainer}>
-                <BookmarkList collection={1} topic={null} elementFunc={elementBookmark}/>
+                {searchEntered ? (
+                    <BookmarkSearchList search={searchEntered} collection={collectionId} elementFunc={elementBookmark}/>
+                ) : (
+                    <BookmarkList collection={collectionId} topic={null} elementFunc={elementBookmark}/>
+                )}
             </div>
             <form onSubmit={onSubmit}>
-                <p>
-                    Selected
-                </p>
-                { selectedBookmark &&
-                    <p className={css.bookmarkName}>
-                        {selectedBookmark.name}
-                    </p>
+                {selectedBookmark && 
+                    <div>
+                        <Bookmark bookmark={selectedBookmark}/>
+                    </div>
                 }
-                <button type="button">Cancel</button>
+                <button type="button" onClick={onDismiss}>Cancel</button>
                 <button id="save">Save</button>
             </form>
         </div>
-    )
+    );
 }

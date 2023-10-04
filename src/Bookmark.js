@@ -1,6 +1,6 @@
 import css from './Bookmark.module.css';
 
-export default function Bookmark({bookmark, onSelect, setTopic, showInfo='type'}) {
+export default function Bookmark({bookmark, onSelect, setTopic, showInfo='type', selected=false}) {
 
     function showDetail() {
         onSelect(bookmark);
@@ -21,7 +21,11 @@ export default function Bookmark({bookmark, onSelect, setTopic, showInfo='type'}
                     <p className={css.topic}>{bookmark.description}</p>
                 }
             </div>
-            <button onClick={showDetail}>Detail</button>
+            {selected ? (
+                <button className={css.selectedButton}>Detail</button>
+            ) : (
+                <button onClick={showDetail}>Detail</button>
+            )}
         </div>
     );
 }

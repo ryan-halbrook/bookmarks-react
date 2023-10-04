@@ -31,7 +31,7 @@ export default function App() {
     async function fetchData() {
         const response = await fetchCollections();
         const data = await response.json();
-        if (data.length > 0){
+        if (data.length > 0) {
             if (selectedCollection == null) {
                 setSelectedCollection(data[0].id);
             }
@@ -76,9 +76,9 @@ export default function App() {
 
     function elementBookmark(bookmark) {
         if (selectedType == null) {
-            return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={selectBookmark} setTopic={setSelectedType}/>
+            return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={selectBookmark} setTopic={setSelectedType} selected={selectedBookmark && selectedBookmark.id === bookmark.id}/>
         } else {
-            return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={selectBookmark} setTopic={setSelectedType} showInfo='description'/>
+            return <Bookmark key={bookmark.id} bookmark={bookmark} onSelect={selectBookmark} setTopic={setSelectedType} showInfo='description' selected={selectedBookmark && selectedBookmark.id === bookmark.id}/>
         }
     }
 
@@ -115,8 +115,6 @@ export default function App() {
                         <div className="Bookmark-list-info">
                             Name Contains '{search}'
                         </div>
-                    }
-                    { search &&
                         <BookmarkSearchList collection={selectedCollection} search={search} elementFunc={elementBookmark}/>
                     }
                     { (selectedCollection && !search) &&
@@ -125,7 +123,7 @@ export default function App() {
                 </div>
                 <div className="Bookmark-detail-panel">
                     { selectedBookmark &&
-                        <BookmarkDetail bookmark={selectedBookmark} onSelectBookmark={selectBookmark}/>
+                        <BookmarkDetail collectionId={selectedCollection} bookmark={selectedBookmark} onSelectBookmark={selectBookmark}/>
                     }
                 </div>
             </div>

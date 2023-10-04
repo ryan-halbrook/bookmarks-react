@@ -17,9 +17,10 @@
 .name {
    margin: 0px;
    padding: 0px 0px 3px 5px;
-   font-size: 16pt;
+   font-size: 14pt;
    color: #444;
    text-decoration: none;
+   font-weight: bold;
 }
 @media (prefers-color-scheme: dark) {
   .name {
@@ -30,5 +31,12 @@
 .topic {
     margin: 0px;
     padding: 5px;
+    font-size: 12pt;
     color: gray;
+}
+
+.selectedButton {
+    border-radius: 3px;
+    background-color: cornflowerblue;
+    border-color: darkblue;
 }
