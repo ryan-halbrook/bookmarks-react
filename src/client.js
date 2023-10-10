@@ -48,7 +48,7 @@ export async function deleteBookmark(collection_id, bookmark_id) {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Content-Type': 'application/json',
                 'Access-Control-Request-Headers': 'content-type',
-                'Access-Control-Request-Method': 'POST',
+                'Access-Control-Request-Method': 'DELETE',
             }
         });
 }
@@ -69,6 +69,20 @@ export async function addTag(bookmark_id, tag_bookmark_id) {
         }
     });
 }
+
+
+export async function deleteTag(bookmark_id, tag_id) {
+    return fetch(endpoint_url('/bookmarks/' + bookmark_id + '/tags/' + tag_id), {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+            'Access-Control-Request-Headers': 'content-type',
+            'Access-Control-Request-Method': 'DELETE',
+        }
+    });
+}
+
 
 export async function addBookmark(collection_id, data) {
     return fetch(endpoint_url('/collections/' + collection_id + '/bookmarks'), {

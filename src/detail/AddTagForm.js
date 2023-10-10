@@ -36,12 +36,14 @@ export default function AddTagForm({collectionId, bookmark, onTagSaved, onDismis
                     <BookmarkList collection={collectionId} topic={null} elementFunc={elementBookmark}/>
                 )}
             </div>
-            <form onSubmit={onSubmit}>
+            <div>
                 {selectedBookmark && 
                     <div>
-                        <Bookmark bookmark={selectedBookmark}/>
+                        <Bookmark bookmark={selectedBookmark} detailButton={false}/>
                     </div>
                 }
+            </div>
+            <form onSubmit={onSubmit}>
                 <button type="button" onClick={onDismiss}>Cancel</button>
                 <button id="save">Save</button>
             </form>

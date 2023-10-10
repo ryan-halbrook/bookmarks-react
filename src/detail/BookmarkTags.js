@@ -7,7 +7,7 @@ import { fetchTags } from '../client'
 export default function BookmarkTags({bookmark, onAddTag, onSelectBookmark}) {
    const [tags, setTags] = useState({});
    const [types, setTypes] = useState([]);
-  
+
    function processTags(data) {
        let typeTagsMap = {};
        let bookmarkTypes = [];

@@ -112,10 +112,12 @@ export default function App() {
             <div className="Content">
                 <div className="Bookmark-list-panel">
                     { search &&
+                        <>
                         <div className="Bookmark-list-info">
                             Name Contains '{search}'
                         </div>
                         <BookmarkSearchList collection={selectedCollection} search={search} elementFunc={elementBookmark}/>
+                        </>
                     }
                     { (selectedCollection && !search) &&
                         <BookmarkList collection={selectedCollection} topic={selectedType} elementFunc={elementBookmark}/>
