@@ -1,25 +1,23 @@
 import css from './BookmarkTagsList.module.css'
-import { deleteTag } from '../client.js'
 
-export default function BookmarkTagsList({bookmarks, onSelectBookmark, isEditing=true}) {
-
-    function deleteBookmarkTag(bookmark) {
-        deleteTag(bookmark.bookmark.id, bookmark.tag_id);
-    }
-
+export default function BookmarkTagsList({tags, onSelectBookmark, onDeleteTag, isEditing=true}) {
     return (
-        bookmarks.map((bookmark) => {
+        <ul>
+        {
+        tags.map((tag) => {
             return (
-                <div className={css.bookmark}>
-                    <button style={{margin: '5px'}} onClick={() => onSelectBookmark(bookmark.bookmark)}>
+                <li key={tag.id} className={css.bookmark}>
+                    <button style={{margin: '5px'}} onClick={() => onSelectBookmark(tag.bookmark)}>
                         Detail
                     </button>
-                    <a className={css.name} href={bookmark.bookmark.link} target="_blank" rel="noreferrer">{bookmark.bookmark.name}</a>
+                    <a className={css.name} href={tag.bookmark.link} target="_blank" rel="noreferrer">{tag.bookmark.name}</a>
                     { isEditing &&
-                        <button onClick={() => deleteBookmarkTag(bookmark)}>Delete</button>
+                        <button onClick={() => onDeleteTag(tag)}>Delete</button>
                     }
-                </div>
+                </li>
             )
         })
+        }
+        </ul>
     )
 }

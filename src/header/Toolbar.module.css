@@ -63,15 +63,6 @@
    margin: 0 10px 0 10px;
 }
 
-.collection {
-   display: flex;
-   flex-direction: column;
-   padding: 10px;
-}
-
-.collection button {
-   margin: 10px;
-}
 
 .addBookmark {
    display: flex;

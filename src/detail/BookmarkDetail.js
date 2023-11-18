@@ -6,7 +6,7 @@ import css from './BookmarkDetail.module.css';
 import { useState } from 'react';
 import { deleteBookmark, addTag } from '../client'
 
-export default function BookmarkDetail({collectionId, bookmark, onSelectBookmark}) {
+export default function BookmarkDetail({collectionId, bookmarks, bookmark, onSelectBookmark}) {
     const [addTagShowing, setAddTagShowing] = useState(false);
     const [deleteShowing, setDeleteShowing] = useState(false);
 
@@ -36,7 +36,7 @@ export default function BookmarkDetail({collectionId, bookmark, onSelectBookmark
         <div className={css.detail}>
             { addTagShowing &&
                 <Modal onDismiss={onDismissAddTag}>
-                    <AddTagForm collectionId={collectionId} bookmark={bookmark} onTagSaved={onTagSaved} onDismiss={onDismissAddTag}/>
+                    <AddTagForm collectionId={collectionId} bookmarks={bookmarks} bookmark={bookmark} onTagSaved={onTagSaved} onDismiss={onDismissAddTag}/>
                 </Modal>
             }
             { deleteShowing &&

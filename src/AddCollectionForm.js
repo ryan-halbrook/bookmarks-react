@@ -9,7 +9,6 @@ export default function AddCollectionForm({onAddCollection, onDismiss}) {
 
     function onSubmit(event) {
         event.preventDefault();
-        console.log('Submit');
         onAddCollection({
             'name': name,
         });

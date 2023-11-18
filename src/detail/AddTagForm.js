@@ -4,13 +4,13 @@ import BookmarkList from '../BookmarkList';
 import BookmarkSearchList from '../BookmarkSearchList';
 import Bookmark from '../Bookmark';
 
-export default function AddTagForm({collectionId, bookmark, onTagSaved, onDismiss}) {
+export default function AddTagForm({collectionId, bookmarks, bookmark, onTagSaved, onDismiss}) {
     const [selectedBookmark, setSelectedBookmark] = useState(null);
     const [searchEntered, setSearchEntered] = useState(null);
 
     function elementBookmark(bookmark) {
         return (
-            <div class={css.tagBookmark} key={bookmark.id}>
+            <div className={css.tagBookmark} key={bookmark.id}>
                 <p onClick={() => setSelectedBookmark(bookmark)}>{bookmark.name}</p>
             </div>
         );
@@ -33,7 +33,7 @@ export default function AddTagForm({collectionId, bookmark, onTagSaved, onDismis
                 {searchEntered ? (
                     <BookmarkSearchList search={searchEntered} collection={collectionId} elementFunc={elementBookmark}/>
                 ) : (
-                    <BookmarkList collection={collectionId} topic={null} elementFunc={elementBookmark}/>
+                    <BookmarkList bookmarks={bookmarks} elementFunc={elementBookmark}/>
                 )}
             </div>
             <div>

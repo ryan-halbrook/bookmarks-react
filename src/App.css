@@ -25,20 +25,7 @@
   overflow: hidden;
 }
 
-.Header {
-   height: 100px;
-   color: black;
-   margin: 0px;
-   background-color: #ededed;
-}
-
-.Header-title {
-   padding: 10px;
-   margin: 0px;
-}
-
 .Bookmark-list-panel {
-    /* height: 100px; */
    border-right: 1px solid #333;
    border-top: 1px solid #333;
    flex-basis: 300px;
@@ -89,97 +76,6 @@
     margin: 0px;
     padding: 5px;
    color: gray;
-}
-
-.TextField {
-   padding: 3px;
-}
-
-.Add-button {
-   border-radius: 5px;
-   border: 1px solid black;
-   background-color: white;
-   padding: 8px;
-   width: 100px;
-   float: right; 
-}
-
-.Toolbar {
-   display: grid;
-   grid-template-columns: 2fr 2fr 1fr;
-   grid-template-rows: 1fr;
-   justify-content: center;
-}
-
-.Toolbar > button {
-   margin: 10px;
-   width: 100px;
-}
-
-.Modal form p {
-   font-size: 24pt;
-   color: white;
-   grid-column-start: 1;
-   grid-column-end: 3;
-   margin: 0;
-   padding: 10px 0;
-
-}
-
-.Modal form {
-   padding: 10px;
-   width: 500px;
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   gap: 16px;
-   font-size: 16pt;
-
-}
-
-.Modal form label {
-   color: #eee;
-}
-
-.Modal form input {
-   background-color: #1d1d1d;
-   color: #eee;
-   border: none;
-   font-size: 16pt;
-}
-
-.Modal form button {
-   padding: 8px;
-   margin: 5px 0px 5px 20px;
-   font-size: 14pt;
-}
-
-#save {
-   width: 250px;
-}
-
-.Modal {
-   overflow: hidden;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   position: fixed;
-   top: 120px;
-   /* width: 100%;
-   height: 100%; */
-   background-color: #333333d6;
-   z-index: 1;
-   border: none;
-   border-radius: 12px;
-}
-
-.Modal-backdrop {
-   position: fixed;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100vh;
-   background-color: rgba(0, 0, 0, 0.6);
-   z-index: 1;
 }
 
 .Bookmark-detail {

@@ -1,34 +1,35 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import css from './Toolbar.module.css';
-import { fetchTypes, fetchCollections } from '../client';
+import { fetchTypes } from '../client';
+import { TypePicker } from './TypePicker.js'
+import { CollectionPicker } from './CollectionPicker.js'
 
-export default function Toolbar({onShowAddBookmark, onShowAddCollection, collection, setCollection, setTopic, setSearch}) {
-    const [topics, setTopics] = useState([]);
-    const [collections, setCollections] = useState([]);
+export default function Toolbar({
+    onShowAddBookmark,
+    onShowAddCollection,
+    collections,
+    collection,
+    setCollection,
+    setType,
+    setSearch}) {
+
+    const [types, setTypes] = useState([]);
     const [searchEntered, setSearchEntered] = useState([]);
 
     useEffect(() => {
-        async function fetchTopics() {
+        async function fetchData() {
             const response = await fetchTypes(collection);
             const data = await response.json();
-            setTopics(data);
+            setTypes(data);
         }
         if (collection) {
-            fetchTopics();
+            fetchData();
         }
-
-        async function fetchData() {
-            const response = await fetchCollections();
-            const data = await response.json();
-            setCollections(data);
-        }
-
-        fetchData();
     }, [collection]);
 
-    function onSelect(event) {
-        setTopic(event.target.value); 
+    function onSelectType(event) {
+        setType(event.target.value);
     }
 
     function onSelectCollection(event) {
@@ -53,24 +54,23 @@ export default function Toolbar({onShowAddBookmark, onShowAddCollection, collect
         setSearch(searchEntered);
     }
 
+    function search() {
+        return (
+            <form onSubmit={onSearch}>
+                <label htmlFor="search">Search </label>
+                <input type="text" onChange={onSearchEntered}></input>
+            </form>
+        );
+    }
+
     return (
         <div className={css.toolbar}>
             <div className={css.left}>
                 <h1 className={css.title}>Bookmarks</h1>
                 <div className={css.filter}>
-                    <label htmlFor="type-select">Type: </label>
-                    <select onClick={onSelect} name="type">
-                        <option value={null} label="All">{null}</option>
-                        {
-                        topics.map((topic) => {
-                            return <option key={topic.id} value={topic.name}>{topic.name}</option>;
-                        })
-                    }</select>
+                    <TypePicker types={types} onSelectType={onSelectType}/>
                     <div>
-                        <form onSubmit={onSearch}>
-                            <label htmlFor="search">Search </label>
-                            <input type="text" onChange={onSearchEntered}></input>
-                        </form>
+                        {search()}
                     </div>
                 </div>
             </div>
@@ -79,18 +79,11 @@ export default function Toolbar({onShowAddBookmark, onShowAddCollection, collect
                 <div className={css.addBookmark}>
                     <button onClick={onShowAddBookmark}>+ Bookmark</button>
                 </div>
-                <div className={css.collection}>
-                    <span>
-                        <label htmlFor="collection-select">Collection: </label>
-                        <select onClick={onSelectCollection} name="type">
-                            {
-                            collections.map((collection) => {
-                                return <option key={collection.id} value={collection.id} label={collection.name}>{collection.id}</option>;
-                            })
-                        }</select>
-                    </span>
-                    <button onClick={onShowAddCollection}>+ Collection</button>
-                </div>
+                <CollectionPicker
+                    collections={collections}
+                    onSelectCollection={onSelectCollection}
+                    onShowAddCollection={onShowAddCollection}
+                />
                 <div className={css.email}>
                     <div>
                         {localStorage.getItem('email')}
@@ -101,5 +94,5 @@ export default function Toolbar({onShowAddBookmark, onShowAddCollection, collect
                 </div>
             </div>
         </div>
-    );
+   );
 }

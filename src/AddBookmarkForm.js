@@ -24,7 +24,6 @@ export default function AddBookmarkForm({onAddBookmark, onDismiss}) {
 
     function onSubmit(event) {
         event.preventDefault();
-        console.log('Submit');
         onAddBookmark({
             'name': name,
             'link': link,

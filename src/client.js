@@ -1,6 +1,6 @@
 const protocol = 'http';
-const api_host = '127.0.0.1';
-const api_port = 5000;
+const api_host = process.env.REACT_APP_BOOKMARKS_HOST
+const api_port = process.env.REACT_APP_BOOKMARKS_PORT
 
 function api_base_url() {
     return protocol + '://' + api_host + ':' + api_port;
