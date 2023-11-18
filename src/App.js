@@ -1,11 +1,10 @@
-import './App.css';
+import css from './App.module.css';
 
 import { useState, useEffect } from 'react';
-import BookmarkList from './BookmarkList';
-import BookmarkSearchList from './BookmarkSearchList';
+import BookmarkList from './list/BookmarkList';
+import Bookmark from './list/Bookmark';
 import SiteHeader from './header/SiteHeader';
 import BookmarkDetail from './detail/BookmarkDetail';
-import Bookmark from './Bookmark';
 import { fetchCollections,
          fetchBookmarks,
          addBookmark,
@@ -93,7 +92,7 @@ export default function App() {
         addCollection(data);
     }
 
-    function elementBookmark(bookmark) {
+    function bookmarkListItem(bookmark) {
         return (
             <Bookmark
                 key={bookmark.id}
@@ -102,12 +101,12 @@ export default function App() {
                 setTopic={setSelectedType}
                 showInfo={(selectedType == null) ? 'type' : 'description'}
                 selected={selectedBookmark && selectedBookmark.id === bookmark.id}
-           />
-        );
+            />
+       );
     }
 
     return (
-        <div className="Site-container">
+        <div className={css.container}>
 
             <SiteHeader
                 onAddBookmark={onAddBookmark}
@@ -119,27 +118,16 @@ export default function App() {
                 setSearch={setSearch}
             />
 
-            <div className="Content">
-                <div className="Bookmark-list-panel">
-                    { search &&
-                        <>
-                        <div className="Bookmark-list-info">
-                            Name Contains '{search}'
-                        </div>
-                        <BookmarkSearchList
-                            collection={selectedCollection}
-                            search={search}
-                            elementFunc={elementBookmark}/>
-                        </>
-                    }
-                    { (selectedCollection && !search) &&
-                        <BookmarkList
-                            bookmarks={bookmarks}
-                            elementFunc={elementBookmark}
-                        />
-                    }
+            <div className={css.content}>
+                <div className={css.listPanel}>
+                    <BookmarkList
+                        bookmarks={bookmarks}
+                        listItemBuilder={bookmarkListItem}
+                        collection={selectedCollection}
+                        searchQuery={search}
+                    />
                 </div>
-                <div className="Bookmark-detail-panel">
+                <div className={css.detailPanel}>
                     { selectedBookmark &&
                         <BookmarkDetail
                             collectionId={selectedCollection}

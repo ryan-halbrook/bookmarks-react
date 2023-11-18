@@ -1,14 +1,13 @@
 import css from './AddTagForm.module.css';
 import { useState } from 'react';
-import BookmarkList from '../BookmarkList';
-import BookmarkSearchList from '../BookmarkSearchList';
-import Bookmark from '../Bookmark';
+import BookmarkList from '../list/BookmarkList';
+import Bookmark from '../list/Bookmark';
 
 export default function AddTagForm({collectionId, bookmarks, bookmark, onTagSaved, onDismiss}) {
     const [selectedBookmark, setSelectedBookmark] = useState(null);
     const [searchEntered, setSearchEntered] = useState(null);
 
-    function elementBookmark(bookmark) {
+    function bookmarkListItem(bookmark) {
         return (
             <div className={css.tagBookmark} key={bookmark.id}>
                 <p onClick={() => setSelectedBookmark(bookmark)}>{bookmark.name}</p>
@@ -29,12 +28,14 @@ export default function AddTagForm({collectionId, bookmarks, bookmark, onTagSave
         <div className={css.container}>
             <h1 className={css.header}>Tag '{bookmark.name}'</h1>
             <input className={css.search} type="text" onChange={onSearchEntered}/>
+
             <div className={css.listContainer}>
-                {searchEntered ? (
-                    <BookmarkSearchList search={searchEntered} collection={collectionId} elementFunc={elementBookmark}/>
-                ) : (
-                    <BookmarkList bookmarks={bookmarks} elementFunc={elementBookmark}/>
-                )}
+                <BookmarkList
+                    bookmarks={bookmarks}
+                    listItemBuilder={bookmarkListItem}
+                    collection={collectionId}
+                    searchQuery={searchEntered}
+                />
             </div>
             <div>
                 {selectedBookmark && 
