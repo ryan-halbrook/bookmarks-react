@@ -15,3 +15,70 @@
    padding: 10px;
    margin: 0px;
 }
+
+.toolbar {
+   display: flex;
+   padding: 10px;
+   width: 100%;
+   margin: 0px;
+   padding: 0px;
+}
+
+.title {
+   padding: 10px 10px 20px 10px;
+   margin: 0px;
+   font-size: 22pt;
+}
+
+.textField {
+   padding: 3px;
+}
+
+.toolbar > button {
+   margin: 10px;
+   width: 100px;
+}
+
+.left {
+   display: flex;
+   flex-direction: column;
+}
+
+.filter {
+   display: flex;
+   flex-direction: row;
+   padding: 0px 0px 10px 10px;
+}
+
+.filter div {
+   padding: 0px 10px 0px 40px;
+}
+
+.filter input {
+   width: 300px;
+}
+
+.right {
+   margin-left: auto;
+   display: flex;
+}
+
+.right button {
+   margin: 0 10px 0 10px;
+}
+
+
+form {
+   padding: 0px;
+   margin: 0px;
+   display: inline-flex;
+}
+
+form label {
+   padding-right: 10px;
+}
+
+form input {
+   padding: 2px 10px;
+   margin: 0px;
+}

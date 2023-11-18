@@ -4,9 +4,6 @@ import { useState, useEffect } from 'react';
 import BookmarkList from './BookmarkList';
 import BookmarkSearchList from './BookmarkSearchList';
 import SiteHeader from './header/SiteHeader';
-import AddBookmarkForm from './AddBookmarkForm';
-import AddCollectionForm from './AddCollectionForm';
-import Modal from './Modal';
 import BookmarkDetail from './detail/BookmarkDetail';
 import Bookmark from './Bookmark';
 import { fetchCollections,
@@ -21,9 +18,6 @@ function getLoggedInUser() {
 }
 
 export default function App() {
-    const [addBookmarkVisible, setAddBookmarkVisible] = useState(false);
-    const [addCollectionVisible, setAddCollectionVisible] = useState(false);
-
     const [selectedBookmark, setSelectedBookmark] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
     const [selectedCollection, setSelectedCollection] = useState(null);
@@ -71,22 +65,6 @@ export default function App() {
         window.location.replace('/login');
     }
 
-    function showAddBookmark() {
-        setAddBookmarkVisible(true);
-    }
-
-    function showAddCollection() {
-        setAddCollectionVisible(true);
-    }
-
-    function dismissAddBookmark() {
-        setAddBookmarkVisible(false);
-    }
-
-    function dismissAddCollection() {
-        setAddCollectionVisible(false);
-    }
-
     function selectBookmark(bookmark) {
         setSelectedBookmark(bookmark);
     }
@@ -128,48 +106,16 @@ export default function App() {
         );
     }
 
-    function addBookmarkModal() {
-        return (
-            <>
-                { addBookmarkVisible &&
-                    <Modal onDismiss={dismissAddBookmark}>
-                        <AddBookmarkForm
-                            onAddBookmark={onAddBookmark}
-                            onDismiss={dismissAddBookmark}
-                        />
-                    </Modal>
-                }
-            </>
-        );
-    }
-
-    function addCollectionModal() {
-        return (
-            <>
-               { addCollectionVisible &&
-                    <Modal onDismiss={dismissAddCollection}>
-                        <AddCollectionForm
-                            onAddCollection={onAddCollection}
-                            onDismiss={dismissAddCollection}
-                        />
-                    </Modal>
-                }
-            </>
-        );
-    }
-
     return (
         <div className="Site-container">
-            { addBookmarkModal() }
-            { addCollectionModal() }
 
             <SiteHeader
-                onShowAddBookmark={showAddBookmark}
-                onShowAddCollection={showAddCollection}
+                onAddBookmark={onAddBookmark}
+                onAddCollection={onAddCollection}
                 collections={collections}
                 collection={selectedCollection}
                 setCollection={setSelectedCollection}
-                setTopic={setSelectedType}
+                setType={setSelectedType}
                 setSearch={setSearch}
             />
 

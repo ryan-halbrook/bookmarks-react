@@ -1,25 +1,50 @@
-import Toolbar from './Toolbar';
 import css from './SiteHeader.module.css';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import TypePicker from './TypePicker';
+import CollectionPicker from './CollectionPicker';
+import AddBookmark from './AddBookmark';
+import SearchBar from './SearchBar';
+import UserStatus from './UserStatus';
 
-export default function Header({
-    onShowAddBookmark,
-    onShowAddCollection,
-    collections, collection,
+
+export default function SiteHeader({
+    onAddBookmark,
+    onAddCollection,
+    collections,
+    collection,
     setCollection,
-    setTopic,
-    setSearch}) {
+    setType,
+    setSearch})
+{
 
     return (
         <div className={css.header}>
-            <Toolbar
-                onShowAddBookmark={onShowAddBookmark}
-                onShowAddCollection={onShowAddCollection}
-                collections={collections}
-                collection={collection}
-                setCollection={setCollection}
-                setTopic={setTopic}
-                setSearch={setSearch}
-            />
+            <div className={css.toolbar}>
+
+                <div className={css.left}>
+                    <h1 className={css.title}>Bookmarks</h1>
+                    <div className={css.filter}>
+                        <TypePicker
+                            collection={collection}
+                            onSelectType={setType}
+                        />
+                        <div>
+                            <SearchBar onSearch={setSearch}/>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={css.right}>
+                    <AddBookmark onAddBookmark={onAddBookmark}/>
+                    <CollectionPicker
+                        collections={collections}
+                        onSelectCollection={setCollection}
+                        onAddCollection={onAddCollection}
+                    />
+                    <UserStatus/>
+                </div>
+            </div>
         </div>
     );
 }
