@@ -1,7 +1,14 @@
 import css from './Bookmark.module.css';
 
+
 export default function Bookmark({
-    bookmark, onSelect, setTopic, showInfo='type', selected=false, detailButton=true}) {
+    bookmark,
+    onSelect,
+    setTopic,
+    showInfo='type',
+    selected=false,
+    detailButton=true})
+{
 
     function showDetail() {
         onSelect(bookmark);

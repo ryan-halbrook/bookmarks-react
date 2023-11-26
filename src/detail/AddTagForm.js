@@ -3,14 +3,22 @@ import { useState } from 'react';
 import BookmarkList from '../list/BookmarkList';
 import Bookmark from '../list/Bookmark';
 
-export default function AddTagForm({collectionId, bookmarks, bookmark, onTagSaved, onDismiss}) {
+export default function AddTagForm({
+    collectionId,
+    bookmarks,
+    bookmark,
+    onTagSaved,
+    onDismiss})
+{
     const [selectedBookmark, setSelectedBookmark] = useState(null);
     const [searchEntered, setSearchEntered] = useState(null);
 
     function bookmarkListItem(bookmark) {
         return (
             <div className={css.tagBookmark} key={bookmark.id}>
-                <p onClick={() => setSelectedBookmark(bookmark)}>{bookmark.name}</p>
+                <p onClick={() => setSelectedBookmark(bookmark)}>
+                    {bookmark.name}
+                </p>
             </div>
         );
     }
@@ -26,8 +34,12 @@ export default function AddTagForm({collectionId, bookmarks, bookmark, onTagSave
 
     return (
         <div className={css.container}>
+
             <h1 className={css.header}>Tag '{bookmark.name}'</h1>
-            <input className={css.search} type="text" onChange={onSearchEntered}/>
+            <input className={css.search}
+                type="text"
+                onChange={onSearchEntered}
+            />
 
             <div className={css.listContainer}>
                 <BookmarkList
@@ -40,12 +52,17 @@ export default function AddTagForm({collectionId, bookmarks, bookmark, onTagSave
             <div>
                 {selectedBookmark && 
                     <div>
-                        <Bookmark bookmark={selectedBookmark} detailButton={false}/>
+                        <Bookmark
+                            bookmark={selectedBookmark}
+                            detailButton={false}
+                        />
                     </div>
                 }
             </div>
             <form onSubmit={onSubmit}>
-                <button type="button" onClick={onDismiss}>Cancel</button>
+                <button type="button" onClick={onDismiss}>
+                    Cancel
+                </button>
                 <button id="save">Save</button>
             </form>
         </div>

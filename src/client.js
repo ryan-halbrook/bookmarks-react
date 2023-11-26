@@ -21,11 +21,12 @@ export async function fetchCollections() {
 }
 
 export async function fetchTypes(collection_id) {
-    return fetch(endpoint_url('/collections/' + collection_id + '/types'), get_header);
+    return fetch(
+        endpoint_url(`/collections/${collection_id}/types`), get_header);
 }
 
 export async function fetchBookmarks(collection_id, type_name) {
-    let endpoint = '/collections/' + collection_id + '/bookmarks';
+    let endpoint = `/collections/${collection_id}/bookmarks`;
     if (type_name) {
         endpoint += '?type=' + type_name;
     }
@@ -33,16 +34,20 @@ export async function fetchBookmarks(collection_id, type_name) {
 }
 
 export async function searchBookmarks(collection_id, search) {
-    let endpoint = '/collections/' + collection_id + '/bookmarks?query=' + search + '&match=name';
+    let endpoint =
+        `/collections/${collection_id}/bookmarks?query=${search}&match=name`;
     return fetch(endpoint_url(endpoint), get_header);
 }
 
 export async function fetchTags(bookmark_id) {
-    return fetch(endpoint_url('/bookmarks/' + bookmark_id + '/tags'), get_header);
+    return fetch(endpoint_url(`/bookmarks/${bookmark_id}/tags`), get_header);
 }
 
 export async function deleteBookmark(collection_id, bookmark_id) {
-    return fetch(endpoint_url('/collections/' + collection_id + '/bookmarks/' + bookmark_id), {
+    return fetch(
+        endpoint_url(
+                `/collections/${collection_id}/bookmarks/${bookmark_id}`),
+        {
             method: 'DELETE',
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -58,7 +63,7 @@ export async function addTag(bookmark_id, tag_bookmark_id) {
         'tag_bookmark_id': tag_bookmark_id
     };
 
-    return fetch(endpoint_url('/bookmarks/' + bookmark_id + '/tags'), {
+    return fetch(endpoint_url(`/bookmarks/${bookmark_id}/tags`), {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -72,7 +77,9 @@ export async function addTag(bookmark_id, tag_bookmark_id) {
 
 
 export async function deleteTag(bookmark_id, tag_id) {
-    return fetch(endpoint_url('/bookmarks/' + bookmark_id + '/tags/' + tag_id), {
+    return fetch(endpoint_url(
+        `/bookmarks/${bookmark_id}/tags/${tag_id}`),
+        {
         method: 'DELETE',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -85,7 +92,7 @@ export async function deleteTag(bookmark_id, tag_id) {
 
 
 export async function addBookmark(collection_id, data) {
-    return fetch(endpoint_url('/collections/' + collection_id + '/bookmarks'), {
+    return fetch(endpoint_url(`/collections/${collection_id}/bookmarks`), {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

@@ -6,7 +6,12 @@ import css from './BookmarkDetail.module.css';
 import { useState } from 'react';
 import { deleteBookmark, addTag } from '../client'
 
-export default function BookmarkDetail({collectionId, bookmarks, bookmark, onSelectBookmark}) {
+export default function BookmarkDetail({
+    collectionId,
+    bookmarks,
+    bookmark,
+    onSelectBookmark})
+{
     const [addTagShowing, setAddTagShowing] = useState(false);
     const [deleteShowing, setDeleteShowing] = useState(false);
 
@@ -20,7 +25,6 @@ export default function BookmarkDetail({collectionId, bookmarks, bookmark, onSel
 
     function addTagHandler() {
         setAddTagShowing(true);
-        console.log('Add tag handler');
     }
 
     function onDismissAddTag() {
@@ -32,25 +36,56 @@ export default function BookmarkDetail({collectionId, bookmarks, bookmark, onSel
         addTag(bookmark.id, tag.id);
     }
 
+    function onDeleteBookmark() {
+        deleteBookmark(collectionId, bookmark.id);
+    }
+
     return (
         <div className={css.detail}>
             { addTagShowing &&
                 <Modal onDismiss={onDismissAddTag}>
-                    <AddTagForm collectionId={collectionId} bookmarks={bookmarks} bookmark={bookmark} onTagSaved={onTagSaved} onDismiss={onDismissAddTag}/>
+                    <AddTagForm
+                        collectionId={collectionId}
+                        bookmarks={bookmarks}
+                        bookmark={bookmark}
+                        onTagSaved={onTagSaved}
+                        onDismiss={onDismissAddTag}
+                    />
                 </Modal>
             }
             { deleteShowing &&
                 <Modal onDismiss={onDismissDelete}>
-                    <ConfirmDialog onConfirm={() => {deleteBookmark(collectionId, bookmark.id);}} onCancel={onDismissDelete}>
+                    <ConfirmDialog
+                        onConfirm={onDeleteBookmark}
+                        onCancel={onDismissDelete}
+                    >
                         Are you sure you want to delete the bookmark?
                     </ConfirmDialog>
                 </Modal>
             }
-            <h1><a className={css.link} href={bookmark.link} target="_blank" rel="noreferrer">{bookmark.name}</a></h1>
+            <h1>
+                <a
+                    className={css.link}
+                    href={bookmark.link}
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    {bookmark.name}
+                </a>
+            </h1>
             <p className={css.typeLabel}>:{bookmark.type.name}</p>
             <p>{bookmark.description}</p>
-            <BookmarkTags bookmark={bookmark} onAddTag={addTagHandler} onSelectBookmark={onSelectBookmark}/>
-            <button className={css.deleteButton} onClick={showDeleteModal}>Delete</button>
+            <BookmarkTags
+                bookmark={bookmark}
+                onAddTag={addTagHandler}
+                onSelectBookmark={onSelectBookmark}
+            />
+            <button
+                className={css.deleteButton}
+                onClick={showDeleteModal}
+            >
+                Delete
+            </button>
         </div>
     );
 }
