@@ -1,5 +1,4 @@
 import css from './CollectionPicker.module.css';
-import Modal from '../Modal';
 import AddCollectionForm from './AddCollectionForm';
 import { useState } from 'react';
 

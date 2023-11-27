@@ -1,4 +1,3 @@
-import css from './TypePicker.module.css';
 import { useState, useEffect } from 'react';
 import { fetchTypes } from '../client';
 

@@ -1,7 +1,6 @@
 import css from './BookmarkList.module.css';
 import { useState, useEffect } from 'react';
 import { searchBookmarks } from '../client';
-import Bookmark from './Bookmark';
 
 
 export default function BookmarkList({

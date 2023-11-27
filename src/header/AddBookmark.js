@@ -1,5 +1,4 @@
 import css from './AddBookmark.module.css';
-import Modal from '../Modal';
 import AddBookmarkForm from './AddBookmarkForm';
 import { useState } from 'react';
 

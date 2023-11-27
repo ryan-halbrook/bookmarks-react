@@ -1,6 +1,4 @@
 import css from './SiteHeader.module.css';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import TypePicker from './TypePicker';
 import CollectionPicker from './CollectionPicker';
 import AddBookmark from './AddBookmark';
