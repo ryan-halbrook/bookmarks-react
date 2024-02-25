@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function CollectionPicker({
   collections,
+  selectedCollection,
   onSelectCollection,
   onAddCollection,
 }) {
@@ -16,6 +17,8 @@ export default function CollectionPicker({
     }
   }
 
+  let pickerValue = selectedCollection ? selectedCollection : "";
+
   return (
     <div className={css.collection}>
       {addModalVisible && (
@@ -26,7 +29,7 @@ export default function CollectionPicker({
       )}
       <span>
         <label htmlFor="collection-select">Collection: </label>
-        <select onClick={onClickCollection} name="type">
+        <select value={pickerValue} onChange={onClickCollection} name="type">
           {collections.map((collection) => {
             return (
               <option

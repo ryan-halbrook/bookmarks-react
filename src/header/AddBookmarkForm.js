@@ -37,7 +37,7 @@ export default function AddBookmarkForm({ onAdd, onDismiss }) {
   return (
     <Modal onDismiss={onDismiss}>
       <form onSubmit={onSubmit}>
-        <p>Add Bookmark</p>
+        <h1>Add Bookmark</h1>
 
         <label htmlFor="name">Name: </label>
         <input type="text" name="name" required onChange={onName} />

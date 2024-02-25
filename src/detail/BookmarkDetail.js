@@ -1,16 +1,19 @@
 import BookmarkTags from "./BookmarkTags";
 import Modal from "../Modal";
 import AddTagForm from "./AddTagForm";
+import EditBookmark from "./EditBookmark";
 import ConfirmDialog from "../ConfirmDialog";
 import css from "./BookmarkDetail.module.css";
 import { useState } from "react";
-import { deleteBookmark, addTag } from "../client";
+import { addTag } from "../client";
 
 export default function BookmarkDetail({
   collectionId,
   bookmarks,
   bookmark,
   onSelectBookmark,
+  onUpdateBookmark,
+  onDeleteBookmark,
 }) {
   const [addTagShowing, setAddTagShowing] = useState(false);
   const [deleteShowing, setDeleteShowing] = useState(false);
@@ -36,8 +39,8 @@ export default function BookmarkDetail({
     addTag(bookmark.id, tag.id);
   }
 
-  function onDeleteBookmark() {
-    deleteBookmark(collectionId, bookmark.id);
+  function handleEditBookmark(updatedBookmark) {
+    onUpdateBookmark(collectionId, bookmark.id, updatedBookmark);
   }
 
   return (
@@ -56,7 +59,7 @@ export default function BookmarkDetail({
       {deleteShowing && (
         <Modal onDismiss={onDismissDelete}>
           <ConfirmDialog
-            onConfirm={onDeleteBookmark}
+            onConfirm={() => onDeleteBookmark(collectionId, bookmark.id)}
             onCancel={onDismissDelete}
           >
             Are you sure you want to delete the bookmark?
@@ -74,7 +77,29 @@ export default function BookmarkDetail({
         </a>
       </h1>
       <p className={css.typeLabel}>:{bookmark.type.name}</p>
+      <div style={{ display: "flex" }}>
+        <EditBookmark bookmark={bookmark} onEdit={handleEditBookmark} />
+        {/* <EditBookmarkForm bookmark={bookmark} onSave={() => {}} onDismiss={() => {}}/> */}
+        <button
+          className={css.deleteButton}
+          onClick={showDeleteModal}
+          style={{ margin: "0px 0px 0px 10px" }}
+        >
+          Delete
+        </button>
+      </div>
       <p>{bookmark.description}</p>
+      {/* <p style={{color: '#777'}}>Created: {Date.parse(bookmark.created).toLocaleString()}</p> */}
+      <p style={{ color: "#555", fontSize: "10pt", paddingTop: "10px" }}>
+        Created: {bookmark.created}
+      </p>
+      <p style={{ color: "#009", fontSize: "10pt" }}>Id: {bookmark.id}</p>
+      {bookmark.note && (
+        <div>
+          <h3>Note</h3>
+          <p>{bookmark.note}</p>
+        </div>
+      )}
       <BookmarkTags
         bookmark={bookmark}
         onAddTag={addTagHandler}

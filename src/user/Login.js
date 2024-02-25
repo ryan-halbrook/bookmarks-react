@@ -17,7 +17,6 @@ export default function Signup() {
   function onSubmit(event) {
     event.preventDefault();
     login(email, password).then((response) => {
-      console.log(response);
       if (response.status === 200) {
         response.json().then((json) => {
           localStorage.setItem("email", json.email);

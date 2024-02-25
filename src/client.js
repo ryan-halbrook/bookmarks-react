@@ -1,146 +1,179 @@
-const protocol = "http";
-const api_host = process.env.REACT_APP_BOOKMARKS_HOST;
-const api_port = process.env.REACT_APP_BOOKMARKS_PORT;
+import * as logger from "./logger.js";
 
-function api_base_url() {
-  return protocol + "://" + api_host + ":" + api_port;
+let logInfo = (message) => logger.info("client", message);
+let logVerbose = (message) => logger.verbose("client", message);
+
+function url(resource) {
+  const protocol = "http";
+  const defaultPort = 3000;
+
+  const getEnv = (key, defaultValue) => {
+    if (Object.hasOwn(process.env, key)) {
+      return process.env[key];
+    } else {
+      return defaultValue;
+    }
+  };
+
+  const host = getEnv("REACT_APP_BOOKMARKS_HOST", window.location.hostname);
+  const port = getEnv("REACT_APP_BOOKMARKS_PORT", defaultPort);
+  return `${protocol}://${host}:${port}${resource}`;
 }
 
-function endpoint_url(endpoint) {
-  return api_base_url() + endpoint;
-}
-
-const get_header = {
-  headers: {
+class Headers {
+  static authorization = {
     Authorization: "Bearer " + localStorage.getItem("token"),
-  },
-};
+  };
 
-export async function fetchCollections() {
-  return fetch(endpoint_url("/collections"), get_header);
+  static contentTypeJson = {
+    "Content-Type": "application/json",
+  };
+
+  static accessControl = (method) => {
+    return {
+      "Access-Control-Request-Headers": "Content-Type",
+      "Access-Control-Request-Method": method,
+    };
+  };
 }
 
-export async function fetchTypes(collection_id) {
-  return fetch(endpoint_url(`/collections/${collection_id}/types`), get_header);
-}
-
-export async function fetchBookmarks(collection_id, type_name) {
-  let endpoint = `/collections/${collection_id}/bookmarks`;
-  if (type_name) {
-    endpoint += "?type=" + type_name;
+function fetchOptions(method = "GET", data, noAuth) {
+  let headers = {};
+  if (noAuth === true) {
+    headers = {
+      ...Headers.contentTypeJson,
+      ...Headers.accessControl(method),
+    };
+  } else {
+    headers = {
+      ...Headers.authorization,
+      ...Headers.contentTypeJson,
+      ...Headers.accessControl(method),
+    };
   }
-  return fetch(endpoint_url(endpoint), get_header);
+  if (data) {
+    return {
+      method: method,
+      body: JSON.stringify(data),
+      headers: headers,
+    };
+  } else {
+    return {
+      method: method,
+      headers: headers,
+    };
+  }
 }
 
-export async function searchBookmarks(collection_id, search) {
-  let endpoint = `/collections/${collection_id}/bookmarks?query=${search}&match=name`;
-  return fetch(endpoint_url(endpoint), get_header);
+const collectionsResource = "/collections";
+const bookmarksResource = (collectionId) =>
+  `${collectionsResource}/${collectionId}/bookmarks`;
+const bookmarkResource = (collectionId, bookmarkId) =>
+  `${bookmarksResource(collectionId)}/${bookmarkId}`;
+const tagsResource = (bookmarkId) => `/bookmarks/${bookmarkId}/tags`;
+const usersResource = "/users";
+
+export function fetchCollections() {
+  logInfo("fetchCollections()");
+  return fetch(url(collectionsResource), fetchOptions());
 }
 
-export async function fetchTags(bookmark_id) {
-  return fetch(endpoint_url(`/bookmarks/${bookmark_id}/tags`), get_header);
-}
-
-export async function deleteBookmark(collection_id, bookmark_id) {
+export function fetchTypes(collectionId) {
+  logInfo(`fetchTypes(${collectionId})`);
   return fetch(
-    endpoint_url(`/collections/${collection_id}/bookmarks/${bookmark_id}`),
-    {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-        "Content-Type": "application/json",
-        "Access-Control-Request-Headers": "content-type",
-        "Access-Control-Request-Method": "DELETE",
-      },
-    },
+    url(`${collectionsResource}/${collectionId}/types`),
+    fetchOptions(),
   );
 }
 
-export async function addTag(bookmark_id, tag_bookmark_id) {
-  const data = {
-    tag_bookmark_id: tag_bookmark_id,
-  };
-
-  return fetch(endpoint_url(`/bookmarks/${bookmark_id}/tags`), {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-      "Content-Type": "application/json",
-      "Access-Control-Request-Headers": "content-type",
-      "Access-Control-Request-Method": "POST",
-    },
-  });
+export function fetchBookmarks(collectionId, typeName) {
+  logInfo(`fetchBookmarks(${collectionId}, ${typeName})`);
+  const query = typeName ? `?type=${typeName}` : "";
+  return fetch(
+    url(`${bookmarksResource(collectionId)}${query}`),
+    fetchOptions(),
+  );
 }
 
-export async function deleteTag(bookmark_id, tag_id) {
-  return fetch(endpoint_url(`/bookmarks/${bookmark_id}/tags/${tag_id}`), {
-    method: "DELETE",
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-      "Content-Type": "application/json",
-      "Access-Control-Request-Headers": "content-type",
-      "Access-Control-Request-Method": "DELETE",
-    },
-  });
+export function fetchBookmark(collectionId, bookmarkId) {
+  logInfo(`fetchBookmark(${collectionId}, ${bookmarkId})`);
+  return fetch(url(bookmarkResource(collectionId, bookmarkId)), fetchOptions());
 }
 
-export async function addBookmark(collection_id, data) {
-  return fetch(endpoint_url(`/collections/${collection_id}/bookmarks`), {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-      "Content-Type": "application/json",
-      "Access-Control-Request-Headers": "content-type",
-      "Access-Control-Request-Method": "POST",
-    },
-  });
+export function searchBookmarks(collectionId, search) {
+  logInfo(`searchBookmarks(${collectionId}, ${search})`);
+  const queryParams = `${search}&match=name`;
+  return fetch(
+    url(`${bookmarksResource(collectionId)}?query=${queryParams}`),
+    fetchOptions(),
+  );
 }
 
-export async function addCollection(data) {
-  return fetch(endpoint_url("/collections"), {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-      "Content-Type": "application/json",
-      "Access-Control-Request-Headers": "content-type",
-      "Access-Control-Request-Method": "POST",
-    },
-  });
+export function fetchTags(bookmarkId) {
+  logInfo(`fetchTags(${bookmarkId})`);
+  return fetch(url(tagsResource(bookmarkId)), fetchOptions());
 }
 
-export async function signup(email, password) {
-  const data = {
-    email: email,
-    password: password,
-  };
-
-  return fetch(endpoint_url("/users"), {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Request-Headers": "content-type",
-      "Access-Control-Request-Method": "POST",
-    },
-  });
+export function deleteBookmark(collectionId, bookmarkId) {
+  logInfo(`deleteBookmark(${collectionId}, ${bookmarkId})`);
+  return fetch(
+    url(bookmarkResource(collectionId, bookmarkId)),
+    fetchOptions("DELETE"),
+  );
 }
 
-export async function login(email, password) {
-  const data = {
-    email: email,
-    password: password,
-  };
+export function updateBookmark(collectionId, bookmarkId, data) {
+  logInfo(`updateBookmark(${collectionId}, ${bookmarkId})`);
+  logVerbose("updateBookmark data: " + JSON.stringify(data));
+  return fetch(
+    url(bookmarkResource(collectionId, bookmarkId)),
+    fetchOptions("PATCH", data),
+  );
+}
 
-  return fetch(endpoint_url("/users/login"), {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Request-Headers": "content-type",
-      "Access-Control-Request-Method": "POST",
-    },
-  });
+export function addTag(bookmarkId, tagBookmarkId) {
+  logInfo(`addTag(${bookmarkId}, ${tagBookmarkId})`);
+  return fetch(
+    url(tagsResource(bookmarkId)),
+    fetchOptions("POST", { tag_bookmark_id: tagBookmarkId }),
+  );
+}
+
+export function deleteTag(bookmarkId, tagId) {
+  logInfo(`deleteTag(${bookmarkId}, ${tagId})`);
+  return fetch(
+    url(`${tagsResource(bookmarkId)}/${tagId}`),
+    fetchOptions("DELETE"),
+  );
+}
+
+export function addBookmark(collectionId, data) {
+  logInfo(`addBookmark(${collectionId})`);
+  logVerbose("addBookmark data: " + JSON.stringify(data));
+  return fetch(
+    url(bookmarksResource(collectionId)),
+    fetchOptions("POST", data),
+  );
+}
+
+export function addCollection(data) {
+  logInfo("addCollection()");
+  logVerbose("addCollection data: " + JSON.stringify(data));
+  return fetch(url(collectionsResource), fetchOptions("POST", data));
+}
+
+export function signup(email, password) {
+  logInfo("signup(email, password)");
+  return fetch(
+    url(usersResource),
+    fetchOptions("POST", { email: email, password: password }, true),
+  );
+}
+
+export function login(email, password) {
+  logInfo("login(email, password)");
+  return fetch(
+    url(`${usersResource}/login`),
+    fetchOptions("POST", { email: email, password: password }, true),
+  );
 }

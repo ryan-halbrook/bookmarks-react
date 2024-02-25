@@ -1,16 +1,21 @@
 import css from "./App.module.css";
-
 import { useState, useEffect } from "react";
 import BookmarkList from "./list/BookmarkList";
 import Bookmark from "./list/Bookmark";
 import SiteHeader from "./header/SiteHeader";
 import BookmarkDetail from "./detail/BookmarkDetail";
+import * as client from "./client";
+import Modal from "./Modal";
+import * as logger from "./logger";
 import {
-  fetchCollections,
-  fetchBookmarks,
-  addBookmark,
-  addCollection,
-} from "./client";
+  sortBookmarks,
+  nextSelectedCollection,
+  loadCollections,
+  loadBookmarks,
+} from "./BookmarksData";
+
+let logInfo = (message) => logger.info("App", message);
+let logError = (message) => logger.error("App", message);
 
 function getLoggedInUser() {
   return localStorage.getItem("token");
@@ -25,39 +30,74 @@ export default function App() {
   const [collections, setCollections] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      if (Number.isInteger(selectedCollection)) {
-        const response = await fetchBookmarks(selectedCollection, selectedType);
-        const data = await response.json();
-        data.sort((a, b) => {
-          return a.name.localeCompare(b.name);
-        });
-        setBookmarks(data);
-      } else {
-        setBookmarks([]);
-      }
-    }
+  const [errorText, setErrorText] = useState(null);
 
-    fetchData();
+  function setCollection(id) {
+    console.assert(Number.isInteger(id));
+    // If the id exists in the collection, update component state and
+    // localStorage.
+    if (collections.find((item) => item.id === id)) {
+      setSelectedType(null);
+      setSelectedBookmark(null);
+      logInfo("Setting localStorage 'collection' to " + id);
+      localStorage.setItem("collection", id);
+      setSelectedCollection(Number(id));
+    }
+  }
+
+  // Load bookmarks when selectedCollection or
+  // selectedType changes.
+  useEffect(() => {
+    let collectionId = selectedCollection;
+    let typeId = selectedType;
+    if (collectionId) {
+      logInfo(
+        "Loading bookmarks, collectionId=" +
+          collectionId +
+          ", typeId=" +
+          typeId,
+      );
+      loadBookmarks(collectionId, typeId)
+        .then((bookmarks) => {
+          if (selectedCollection === collectionId && selectedType === typeId) {
+            logInfo(
+              "Setting bookmarks, collectionId=" +
+                collectionId +
+                ", typeId=" +
+                typeId,
+            );
+            setBookmarks(bookmarks);
+          }
+        })
+        .catch((error) => {
+          logError("loadBookmarks failed: " + error);
+          setErrorText("Failed to load bookmarks.\n" + error);
+        });
+    }
   }, [selectedCollection, selectedType]);
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetchCollections();
-      const data = await response.json();
-      setCollections(data);
-      if (data.length > 0) {
-        setSelectedCollection(data[0].id);
-      }
-    }
-    fetchData();
+    logInfo("Fetching collections");
+    loadCollections()
+      .then((collectionsArray) => {
+        setCollections(collectionsArray);
+      })
+      .catch((error) => {
+        logError("loadCollections failed: " + error);
+        setErrorText("Failed to load collections.\n" + error);
+      });
   }, []);
+
+  useEffect(() => {
+    logInfo("Collections changed, updating selectedCollection");
+    setCollection(nextSelectedCollection(collections));
+  }, [collections]);
 
   useEffect(() => {
     setSelectedType(null);
   }, [search]);
 
+  // Redirect to login page if not logged in.
   if (!getLoggedInUser()) {
     window.location.replace("/login");
   }
@@ -66,30 +106,121 @@ export default function App() {
     setSelectedBookmark(bookmark);
   }
 
-  function onAddBookmark(data) {
-    let new_array = [
-      ...bookmarks,
-      {
-        name: data.name,
-        link: data.link,
-        type: {
-          id: 0,
-          name: data.type,
-        },
-        description: data.description,
-      },
-    ];
-
-    new_array.sort((a, b) => {
-      return a.name.localeCompare(b.name);
-    });
-    setBookmarks(new_array);
-    addBookmark(selectedCollection, data);
-  }
-
   function onAddCollection(data) {
     setCollections([...collections, { id: 0, name: data.name }]);
-    addCollection(data);
+    client.addCollection(data);
+  }
+
+  let bookmarkFromData = (bookmark) => {
+    return {
+      id: bookmark.id,
+      name: bookmark.name,
+      link: bookmark.link,
+      type: {
+        id: bookmark.type.id,
+        name: bookmark.type.name,
+        collectionId: bookmark.type.collectionId,
+      },
+      description: bookmark.description,
+    };
+  };
+
+  function onAddBookmark(bookmark) {
+    client
+      .addBookmark(selectedCollection, bookmark)
+      .then((response) => {
+        if (response.status === 200) {
+          response.json().then((data) => {
+            let bookmarksArray = [...bookmarks, bookmarkFromData(data)];
+            sortBookmarks(bookmarksArray);
+            setBookmarks(bookmarksArray);
+          });
+        } else {
+          setErrorText("Failed to add bookmark");
+          logError("Failed to add bookmark");
+        }
+      })
+      .catch((error) => {
+        setErrorText("Server Error: Failed to add bookmark: " + error);
+        logError("Server Error: Failed to add bookmark: " + error);
+      });
+  }
+
+  function onDeleteBookmark(collectionId, bookmarkId) {
+    client
+      .deleteBookmark(collectionId, bookmarkId)
+      .then((response) => {
+        if (response.status === 200) {
+          let bookmarksArray = bookmarks.filter((item) => {
+            return item.id !== bookmarkId;
+          });
+          //sortBookmarks(bookmarksArray);
+          setBookmarks(bookmarksArray);
+        } else {
+          setErrorText("Failed to parse deleted bookmark");
+        }
+      })
+      .catch((error) => {
+        setErrorText("Server Error: Failed to delete bookmark");
+      });
+  }
+
+  function refreshBookmark(collectionId, bookmarkId) {
+    client.fetchBookmark(collectionId, bookmarkId).then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          let bookmarksArray = bookmarks.map((item) => {
+            if (item.id === bookmarkId) {
+              let bookmark = bookmarkFromData(data);
+              if (selectedBookmark && selectedBookmark.id === bookmarkId) {
+                setSelectedBookmark(bookmark);
+              }
+              return bookmark;
+            } else {
+              return item;
+            }
+          });
+          sortBookmarks(bookmarksArray);
+          setBookmarks(bookmarksArray);
+        });
+      }
+    });
+  }
+
+  function onUpdateBookmark(collectionId, bookmarkId, updatedBookmark) {
+    client
+      .updateBookmark(collectionId, bookmarkId, updatedBookmark)
+      .then((response) => {
+        if (response.status === 200) {
+          refreshBookmark(collectionId, bookmarkId);
+        } else {
+          setErrorText("Failed to update bookmark");
+        }
+      })
+      .catch((error) => {
+        setErrorText("Server Error: Failed to update bookmark");
+      });
+  }
+
+  function onAddCollection(collection) {
+    client
+      .addCollection(collection)
+      .then((response) => {
+        if (response.status === 200) {
+          response.json().then((data) => {
+            let collectionsArray = [
+              ...collections,
+              { id: data.id, name: data.name },
+            ];
+            setCollections(collectionsArray);
+          });
+        } else {
+          setErrorText("Failed to parse new collection");
+        }
+      })
+      .catch((error) => {
+        setErrorText("Server Error: Failed to add collection");
+      });
   }
 
   function bookmarkListItem(bookmark) {
@@ -107,12 +238,21 @@ export default function App() {
 
   return (
     <div className={css.container}>
+      {errorText && (
+        <Modal onDismiss={() => setErrorText(null)}>
+          <form onSubmit={() => setErrorText(null)}>
+            <h1>{errorText}</h1>
+            <button>Ok</button>
+          </form>
+        </Modal>
+      )}
+
       <SiteHeader
         onAddBookmark={onAddBookmark}
         onAddCollection={onAddCollection}
         collections={collections}
         collection={selectedCollection}
-        setCollection={setSelectedCollection}
+        setCollection={setCollection}
         setType={setSelectedType}
         setSearch={setSearch}
       />
@@ -133,6 +273,8 @@ export default function App() {
               bookmarks={bookmarks}
               bookmark={selectedBookmark}
               onSelectBookmark={selectBookmark}
+              onUpdateBookmark={onUpdateBookmark}
+              onDeleteBookmark={onDeleteBookmark}
             />
           )}
         </div>

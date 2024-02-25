@@ -31,6 +31,7 @@ export default function SiteHeader({
           <AddBookmark onAddBookmark={onAddBookmark} />
           <CollectionPicker
             collections={collections}
+            selectedCollection={collection}
             onSelectCollection={setCollection}
             onAddCollection={onAddCollection}
           />

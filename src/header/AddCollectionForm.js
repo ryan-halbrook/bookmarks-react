@@ -17,7 +17,7 @@ export default function AddCollectionForm({ onAdd, onDismiss }) {
   return (
     <Modal onDismiss={onDismiss}>
       <form onSubmit={onSubmit}>
-        <p>Add Collection</p>
+        <h1>Add Collection</h1>
 
         <label htmlFor="name">Name: </label>
         <input type="text" name="name" required onChange={onName} />
