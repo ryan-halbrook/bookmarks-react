@@ -1,58 +1,58 @@
 .container {
-     width: 600px;
-     height: 70vmin;
+  width: 600px;
+  height: 70vmin;
 }
 
 .header {
-   margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .listContainer {
-   height: 45vmin;
-   overflow: scroll;
-   overscroll-behavior: contain;
+  height: 45vmin;
+  overflow: scroll;
+  overscroll-behavior: contain;
 }
 
 .bookmarkName {
-   color: white;
+  color: white;
 }
 
 .tagBookmark {
-   display: flex;
-   padding: 0;
-   padding-left: 5px;
-   margin: 0;
-   border-bottom: 1px solid gray;
-   background-color: #fcfcfc;
-   color: #222;
+  display: flex;
+  padding: 0;
+  padding-left: 5px;
+  margin: 0;
+  border-bottom: 1px solid gray;
+  background-color: #fcfcfc;
+  color: #222;
 }
 @media (prefers-color-scheme: dark) {
-   .tagBookmark {
-       background-color: #373737;
-       color: #ddd;
-       border-bottom: 1px solid black;
-   }
+  .tagBookmark {
+    background-color: #373737;
+    color: #ddd;
+    border-bottom: 1px solid black;
+  }
 }
 
 .tagBookmark p {
-   font-size: 16pt;
-   margin: 0;
-   padding: 5px;
-   border-left: 1px solid black;
-   margin-left: 5px;
+  font-size: 16pt;
+  margin: 0;
+  padding: 5px;
+  border-left: 1px solid black;
+  margin-left: 5px;
 }
 
 .search {
-   color: black;
-   width: 100%;
-   margin-top: 5px;
-   font-size: 20pt;
-   background-color: #ddd;
-   border: 0;
+  color: black;
+  width: 100%;
+  margin-top: 5px;
+  font-size: 20pt;
+  background-color: #ddd;
+  border: 0;
 }
 @media (prefers-color-scheme: dark) {
-   .search {
-        color: white;
-        background-color: black;
-   }
+  .search {
+    color: white;
+    background-color: black;
+  }
 }

@@ -1,20 +1,20 @@
 .list {
-   background-color: #fcfcfc;
+  background-color: #fcfcfc;
 }
 
 @media (prefers-color-scheme: dark) {
- .list {
-   background-color: black;
- }
+  .list {
+    background-color: black;
+  }
 }
 
 ul {
-   padding: 0px;
-   margin: 0px;
+  padding: 0px;
+  margin: 0px;
 }
 
 .info {
-   background-color: #464646;
-   color: #e3eefd;
-   padding: 3px 0px 3px 10px;
+  background-color: #464646;
+  color: #e3eefd;
+  padding: 3px 0px 3px 10px;
 }

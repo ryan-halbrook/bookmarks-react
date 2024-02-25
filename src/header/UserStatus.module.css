@@ -1,13 +1,13 @@
 .email {
-   display: flex;
-   flex-direction: column;
-   align-items: flex-end;
-   margin: 24px 10px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 24px 10px 24px 24px;
 }
 
 .email button {
-   padding: 0px;
-   margin: 0px;
-   margin-left: auto;
-   text-align: right;
+  padding: 0px;
+  margin: 0px;
+  margin-left: auto;
+  text-align: right;
 }

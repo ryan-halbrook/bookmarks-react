@@ -1,11 +1,11 @@
 .bookmark {
-   display: grid;
-   grid-template-rows: 1fr;
-   grid-template-columns: 4fr 1fr;
-   margin: 0 10px 0 0;
-   border-bottom: 1px solid #bbb;
-   padding: 8px;
-   background: white;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 4fr 1fr;
+  margin: 0 10px 0 0;
+  border-bottom: 1px solid #bbb;
+  padding: 8px;
+  background: white;
 }
 @media (prefers-color-scheme: dark) {
   .bookmark {
@@ -15,12 +15,12 @@
 }
 
 .name {
-   margin: 0px;
-   padding: 0px 0px 3px 5px;
-   font-size: 16pt;
-   color: #444;
-   text-decoration: none;
-   /* font-weight: bold; */
+  margin: 0px;
+  padding: 0px 0px 3px 5px;
+  font-size: 16pt;
+  color: #444;
+  text-decoration: none;
+  /* font-weight: bold; */
 }
 @media (prefers-color-scheme: dark) {
   .name {
@@ -29,14 +29,14 @@
 }
 
 .topic {
-    margin: 0px;
-    padding: 5px;
-    font-size: 12pt;
-    color: gray;
+  margin: 0px;
+  padding: 5px;
+  font-size: 12pt;
+  color: gray;
 }
 
 .selectedButton {
-    border-radius: 3px;
-    background-color: cornflowerblue;
-    border-color: darkblue;
+  border-radius: 3px;
+  background-color: cornflowerblue;
+  border-color: darkblue;
 }

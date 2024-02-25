@@ -1,20 +1,20 @@
 .detail {
-   height: 80vh;
-   margin: 20px;
-   /* overflow: scroll; */
-   /* overscroll-behavior: contain; */
-   color: black;
+  height: 80vh;
+  margin: 20px;
+  /* overflow: scroll; */
+  /* overscroll-behavior: contain; */
+  color: black;
 }
-@media (prefers-color-scheme:dark) {
+@media (prefers-color-scheme: dark) {
   .detail {
     color: #eee;
   }
 }
 
 .detail h1 {
-   font-size: 24pt;
-   margin: 0;
-   padding: 0;
+  font-size: 24pt;
+  margin: 0;
+  padding: 0;
 }
 @media (prefers-color-scheme: dark) {
   .detail h1 {
@@ -23,16 +23,16 @@
 }
 
 .typeLabel {
-   font-size: 14pt;
-   margin: 5px 0 36px 0;
-   padding: 0;
-   color: #777;
+  font-size: 14pt;
+  margin: 5px 0 36px 0;
+  padding: 0;
+  color: #777;
 }
 
 .link {
-   /* color: #222; */
-   color: cornflowerblue;
-   text-decoration: none;
+  /* color: #222; */
+  color: cornflowerblue;
+  text-decoration: none;
 }
 @media (prefers-color-scheme: dark) {
   .link {
@@ -41,5 +41,5 @@
 }
 
 .deleteButton {
-   margin-top: 24px;
+  margin-top: 24px;
 }

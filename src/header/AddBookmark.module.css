@@ -1,10 +1,10 @@
 .addBookmark {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   margin: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 24px;
 }
 
 .addBookmark button {
-   height: 40px;
+  height: 40px;
 }

@@ -1,28 +1,29 @@
 .container {
-   display: flex;
-   flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .content {
-   display: flex;
-   flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-.container, .content {
+.container,
+.content {
   margin: 0;
   height: 100%;
   overflow: hidden;
 }
 
 .listPanel {
-   border-right: 1px solid #333;
-   border-top: 1px solid #333;
-   flex-basis: 300px;
-   overflow: scroll;
+  border-right: 1px solid #333;
+  border-top: 1px solid #333;
+  flex-basis: 300px;
+  overflow: scroll;
 }
 
 .detailPanel {
-   flex: 1;
-   border-top: 1px solid #333;
-   overflow: scroll;
+  flex: 1;
+  border-top: 1px solid #333;
+  overflow: scroll;
 }
